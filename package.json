@@ -17,7 +17,7 @@
     "check-bundlesize": "bundlesize",
     "tsc-validate-watch": "yarn tsc-validate-once --watch",
     "tsc-validate-once": "node_modules/typescript/bin/tsc --project ./tsconfig.json --noEmit true",
-    "ci": "run-p -l ci-prod ci-dev",
+    "ci": "run-p -l clean-target _lint-js _prettier tsc-validate-once",
     "postinstall": "make-dir dist target"
   },
   "husky": {
