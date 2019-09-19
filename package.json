@@ -1,0 +1,55 @@
+{
+  "name": "udemy-ng-material",
+  "version": "1.0.0",
+  "description": "Replay after udemy course",
+  "main": "index.js",
+  "repository": "https://github.com/joma74/udemy-ng-material.git",
+  "author": "joma74 <dev-mails@gmx.net>",
+  "license": "MIT",
+  "private": false,
+  "scripts": {
+    "clean-dist": "del-cli 'dist/*'",
+    "clean-target": "del-cli 'target/*' '!*/yarn.*.log' '!*/\\.gitkeep'",
+    "_lint-js": "tslint --project '.' 'src/**/*.ts' 'src/**/*.tsx' 'src/**/*.js' 'config/**/*.js'",
+    "lint-js-fix": "yarn _lint-js --fix",
+    "_prettier": "prettier --list-different '**/*.{js,ts,tsx,json,md,html}'",
+    "prettier-fix": "yarn _prettier --write",
+    "check-bundlesize": "bundlesize",
+    "tsc-validate-watch": "yarn tsc-validate-once --watch",
+    "tsc-validate-once": "node_modules/typescript/bin/tsc --project ./tsconfig.json --noEmit true",
+    "ci": "run-p -l ci-prod ci-dev",
+    "postinstall": "make-dir dist target"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn tsc-validate-once && lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{js,ts,tsx}": [
+      "yarn run _lint-js"
+    ],
+    "*.{js,ts,tsx,json,md,html}": [
+      "prettier --list-different"
+    ]
+  },
+  "devDependencies": {
+    "del-cli": "^3.0.0",
+    "husky": "^3.0.5",
+    "lint-staged": "^9.2.5",
+    "make-dir-cli": "^2.0.0",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^1.18.2",
+    "start-server-and-test": "^1.10.2",
+    "tslint": "^5.20.0",
+    "tslint-config-prettier": "^1.18.0",
+    "tslint-eslint-rules": "^5.4.0",
+    "typescript": "^3.6.3"
+  },
+  "dependencies": {},
+  "engineStrict": true,
+  "engines": {
+    "node": ">= 11.14.0",
+    "yarn": ">= 1.17.3"
+  }
+}
