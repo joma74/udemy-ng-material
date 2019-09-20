@@ -6,9 +6,9 @@
   "scripts": {
     "clean-dist": "del-cli 'dist/*'",
     "clean-target": "del-cli 'target/*' '!*/yarn.*.log' '!*/\\.gitkeep'",
-    "_lint-js": "tslint --format verbose",
+    "_lint-js": "tslint --format verbose '**/*.ts' '**/*.tsx' '**/*.js' 'config/**/*.js' 'e2e/**/*.js'",
     "lint-js-fix": "yarn _lint-js --fix",
-    "_prettier": "prettier --list-different '**/*.{js,ts,tsx,json,md,html}'",
+    "_prettier": "prettier --slist-different '**/*.{js,ts,tsx,json,md,html}'",
     "prettier-fix": "yarn _prettier --write",
     "check-bundlesize": "bundlesize",
     "tsc-validate-watch": "yarn tsc-validate-once --watch",
