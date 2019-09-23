@@ -6,12 +6,12 @@
   "scripts": {
     "clean-dist": "del-cli 'dist/*'",
     "clean-target": "del-cli 'target/*' '!*/yarn.*.log' '!*/\\.gitkeep'",
-    "_lint": "tslint --type-check --project '.'",
+    "_lint": "tslint --project '.'",
     "lint-fix": "yarn _lint --fix",
     "_prettier": "prettier --list-different '**/*.{json,md,MD,html}'",
     "prettier-fix": "yarn _prettier --write",
-    "tslint-check": "tslint-config-prettier-check ./tslint.json",
-    "check-bundlesize": "bundlesize",
+    "tslint-prettier-contradictions": "tslint-config-prettier-check ./tslint.json",
+    "bundlesize-check": "bundlesize",
     "tsc-validate-watch": "yarn tsc-validate-once --watch",
     "tsc-validate-once": "node_modules/typescript/bin/tsc --project ./tsconfig.json --noEmit true",
     "ng": "ng",
@@ -31,10 +31,10 @@
   },
   "lint-staged": {
     "*.{js,ts,tsx}": [
-      "yarn run _lint"
+      "yarn _lint"
     ],
     "*.{json,md,MD,html,HTML}": [
-      "prettier --list-different"
+      "yarn _prettier"
     ]
   },
   "dependencies": {

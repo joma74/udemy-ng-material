@@ -1,4 +1,3 @@
 {
-    "http.proxy": "http://proxy.sozvers.at:8080/",
-    "http.proxyStrictSSL": false
+    "http.proxyStrictSSL": true
 }
