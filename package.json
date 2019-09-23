@@ -6,20 +6,21 @@
   "scripts": {
     "clean-dist": "del-cli 'dist/*'",
     "clean-target": "del-cli 'target/*' '!*/yarn.*.log' '!*/\\.gitkeep'",
-    "_lint-js": "tslint --format verbose '**/*.ts' '**/*.tsx' '**/*.js' 'config/**/*.js' 'e2e/**/*.js'",
-    "lint-js-fix": "yarn _lint-js --fix",
-    "_prettier": "prettier --slist-different '**/*.{js,ts,tsx,json,md,html}'",
+    "_lint": "tslint --type-check --project '.'",
+    "lint-fix": "yarn _lint --fix",
+    "_prettier": "prettier --list-different '**/*.{js,ts,tsx,json,md,MD,html}'",
     "prettier-fix": "yarn _prettier --write",
+    "tslint-check": "tslint-config-prettier-check ./tslint.json",
     "check-bundlesize": "bundlesize",
     "tsc-validate-watch": "yarn tsc-validate-once --watch",
     "tsc-validate-once": "node_modules/typescript/bin/tsc --project ./tsconfig.json --noEmit true",
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
-    "test": "ng test",
+    "test": "ng test --watch=false",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "ci": "run-s -l clean-target _lint-js _prettier tsc-validate-once",
+    "ci": "run-s -l clean-target _lint _prettier tsc-validate-once",
     "postinstall": "make-dir dist target"
   },
   "husky": {
@@ -29,9 +30,9 @@
   },
   "lint-staged": {
     "*.{js,ts,tsx}": [
-      "yarn run _lint-js"
+      "yarn run _lint"
     ],
-    "*.{js,ts,tsx,json,md,html}": [
+    "*.{json,md,MD,html,HTML}": [
       "prettier --list-different"
     ]
   },
@@ -74,14 +75,15 @@
     "prettier": "^1.18.2",
     "protractor": "~5.4.0",
     "ts-node": "~7.0.0",
-    "tslint": "~5.15.0",
+    "tslint": "^5.15.0",
     "tslint-config-prettier": "^1.18.0",
     "tslint-eslint-rules": "^5.4.0",
+    "tslint-plugin-prettier": "^2.0.1",
     "typescript": "~3.5.3"
   },
   "engineStrict": true,
   "engines": {
-    "node": ">= 11.14.0",
+    "node": ">= 10.16.3",
     "yarn": ">= 1.17.3"
   }
 }
