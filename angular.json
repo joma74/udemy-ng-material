@@ -24,6 +24,14 @@
             "scripts": []
           },
           "configurations": {
+            "hmr": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.hmr.ts"
+                }
+              ]
+            },
             "production": {
               "fileReplacements": [
                 {
@@ -61,6 +69,10 @@
             "browserTarget": "fitness-tracker:build"
           },
           "configurations": {
+            "hmr": {
+              "hmr": true,
+              "browserTarget": "fitness-tracker:build:hmr"
+            },
             "production": {
               "browserTarget": "fitness-tracker:build:production"
             }
