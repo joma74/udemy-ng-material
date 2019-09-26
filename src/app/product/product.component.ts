@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core"
+import { Component, OnInit, Input, EventEmitter, Output } from "@angular/core"
 
 @Component({
   selector: "app-product",
@@ -6,19 +6,17 @@ import { Component, OnInit } from "@angular/core"
   styleUrls: ["./product.component.css"],
 })
 export class ProductComponent implements OnInit {
-  products = ["A Flower", "A Book", "A sore"]
-  productName = "A Tree"
-  isDisabled = true
+  @Input()
+  productName: string
+
+  @Output()
+  productClicked = new EventEmitter()
 
   constructor() {}
 
-  ngOnInit() {
-    setTimeout(() => {
-      this.isDisabled = false
-    }, 3000)
-  }
+  ngOnInit() {}
 
-  onAddProduct() {
-    this.products.push(this.productName)
+  onClicked() {
+    this.productClicked.emit()
   }
 }
