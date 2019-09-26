@@ -1,5 +1,6 @@
-<h1>My Products</h1>
-<button (click)="this.productName = 'A Fool'" [disabled]="isDisabled">
-  Change Name
+<h1>My Product</h1>
+<input *ngIf="!isDisabled" type="text" [(ngModel)]="productName" />
+<button *ngIf="!isDisabled" (click)="onAddProduct()">
+  Add A Product
 </button>
-<div>{{ productName }}</div>
+<div *ngFor="let product of products">{{ product }}</div>
