@@ -866,20 +866,6 @@
     tree-kill "1.2.1"
     webpack-sources "1.4.3"
 
-"@ngxs/hmr-plugin@^3.5.1":
-  version "3.5.1"
-  resolved "https://registry.yarnpkg.com/@ngxs/hmr-plugin/-/hmr-plugin-3.5.1.tgz#e1ad4bb88fa6a98844eb73f3d9aeab51b55c3a68"
-  integrity sha512-idXk4WffHQm5qmu7Umgj0gz6bpt2Lie0z+T1Ok2SF8sppgYYzXAxMa946tAncyjqy/7Hkgmi3DrFJ0n+F8LuRg==
-  dependencies:
-    tslib "^1.9.0"
-
-"@ngxs/store@^3.5.1":
-  version "3.5.1"
-  resolved "https://registry.yarnpkg.com/@ngxs/store/-/store-3.5.1.tgz#277aab3adc532088e53699962142b57852f59298"
-  integrity sha512-oChcRNHHpYwrYQO4aPs4OP5vjvqspb9OdUW7ZcyVHJF5UyLCrETBWh+fqJwFoEXAiiOBL2CP4LtVcSu+o8DEVg==
-  dependencies:
-    tslib "^1.9.0"
-
 "@nodelib/fs.scandir@2.1.2":
   version "2.1.2"
   resolved "https://registry.yarnpkg.com/@nodelib/fs.scandir/-/fs.scandir-2.1.2.tgz#1f981cd5b83e85cfdeb386fc693d4baab392fa54"
@@ -995,6 +981,11 @@
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/@types/source-list-map/-/source-list-map-0.1.2.tgz#0078836063ffaf17412349bba364087e0ac02ec9"
   integrity sha512-K5K+yml8LTo9bWJI/rECfIPrGgxdpeNbj+d53lwN4QjW1MCwlkhUms+gtdzigTeUyBr09+u8BwOIY3MXvHdcsA==
+
+"@types/webpack-env@^1.14.0":
+  version "1.14.0"
+  resolved "https://registry.yarnpkg.com/@types/webpack-env/-/webpack-env-1.14.0.tgz#8edfc5f8e6eae20eeed3ca0d02974ed4ee5e4efc"
+  integrity sha512-Fv+0gYJzE/czLoRKq+gnXWr4yBpPM3tO3C8pDLFwqVKlMICQUq5OsxwwFZYDaVr7+L6mgNDp16iOcJHEz3J5RQ==
 
 "@types/webpack-sources@^0.1.5":
   version "0.1.5"
