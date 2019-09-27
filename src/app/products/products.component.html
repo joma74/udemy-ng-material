@@ -1,4 +1,4 @@
-<h1>My Product</h1>
+<h1>My Products</h1>
 <form #f="ngForm" (ngSubmit)="onAddProduct(f)">
   <input *ngIf="!isDisabled" type="text" ngModel name="productName" required />
   <button type="submit" *ngIf="!isDisabled">
