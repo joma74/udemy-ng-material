@@ -54,7 +54,7 @@
     "no-switch-case-fall-through": true,
     "no-var-requires": false,
     "object-literal-sort-keys": false,
-    "ordered-imports": false,
+    "ordered-imports": true,
     "trailing-comma": false,
     "no-conflicting-lifecycle": true,
     "no-host-metadata-property": true,

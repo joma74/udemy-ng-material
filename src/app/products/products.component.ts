@@ -1,8 +1,8 @@
-import { Component, OnInit, OnDestroy } from "@angular/core"
-import { log } from "util"
+import { Component, OnDestroy, OnInit } from "@angular/core"
 import { NgForm } from "@angular/forms"
-import { ProductsService } from "./products.service"
 import { Subscription } from "rxjs"
+import { log } from "util"
+import { ProductsService } from "./products.service"
 
 @Component({
   selector: "app-products",
