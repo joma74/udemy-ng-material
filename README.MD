@@ -6,6 +6,5 @@
 
 See
 
-- https://levelup.gitconnected.com/hmr-in-angular-cli-project-eb8512ef514b
-- https://www.ngxs.io/plugins/hmr
-- https://stackoverflow.com/questions/43258421/properly-using-environment-ts-in-my-angular4-application-with-angular-cli
+- https://github.com/angular/angular-cli/blob/master/docs/documentation/stories/configure-hmr.md
+- https://github.com/PatrickJS/angular-hmr
