@@ -1,3 +1,4 @@
 {
-    "http.proxyStrictSSL": true
+    "http.proxyStrictSSL": true,
+    "typescript.preferences.quoteStyle": "double"
 }
