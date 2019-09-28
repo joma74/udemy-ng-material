@@ -4,6 +4,7 @@
   "ignoreFiles": ["./build/**/*", "./dist/**/*", "./node_modules/**/*"],
   "rules": {
     "selector-nested-pattern": "^&",
+    "selector-type-no-unknown": [true, { "ignoreTypes": ["/^mat-/"] }],
     "at-rule-no-unknown": [
       true,
       {
