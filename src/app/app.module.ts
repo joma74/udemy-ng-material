@@ -13,7 +13,7 @@ import { SidenavListComponent } from "./navigation/sidenav-list/sidenav-list.com
 import { AppRoutingModule } from "./routing/app-routing.module"
 import { CurrentTrainingComponent } from "./training/current-training/current-training.component"
 import { NewTrainingComponent } from "./training/new-training/new-training.component"
-import { PostTrainingsComponent } from "./training/post-trainings/post-trainings.component"
+import { PastTrainingsComponent } from "./training/past-trainings/past-trainings.component"
 import { TrainingComponent } from "./training/training.component"
 import { WelcomeComponent } from "./welcome/welcome.component"
 
@@ -23,7 +23,7 @@ import { WelcomeComponent } from "./welcome/welcome.component"
     CurrentTrainingComponent,
     LoginComponent,
     NewTrainingComponent,
-    PostTrainingsComponent,
+    PastTrainingsComponent,
     SignupComponent,
     TrainingComponent,
     WelcomeComponent,
