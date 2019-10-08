@@ -4,6 +4,7 @@ import {
   MatCardModule,
   MatCheckboxModule,
   MatDatepickerModule,
+  MatDialogModule,
   MatFormFieldModule,
   MatIconModule,
   MatInputModule,
@@ -32,6 +33,7 @@ import {
     MatCardModule,
     MatSelectModule,
     MatProgressSpinnerModule,
+    MatDialogModule,
   ],
   exports: [
     MatButtonModule,
@@ -48,6 +50,7 @@ import {
     MatCardModule,
     MatSelectModule,
     MatProgressSpinnerModule,
+    MatDialogModule,
   ],
 })
 export class MaterialModule {}
