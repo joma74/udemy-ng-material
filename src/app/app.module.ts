@@ -5,6 +5,7 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms"
 import { BrowserModule } from "@angular/platform-browser"
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations"
 import { AppComponent } from "./app.component"
+import { AuthService } from "./auth/auth.service"
 import { LoginComponent } from "./auth/login/login.component"
 import { SignupComponent } from "./auth/signup/signup.component"
 import { MaterialModule } from "./material/material.module"
@@ -41,7 +42,7 @@ import { WelcomeComponent } from "./welcome/welcome.component"
     MaterialModule,
     ReactiveFormsModule,
   ],
-  providers: [],
+  providers: [AuthService],
   bootstrap: [AppComponent],
   entryComponents: [StopTrainingComponent],
 })
