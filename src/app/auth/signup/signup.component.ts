@@ -22,6 +22,5 @@ export class SignupComponent implements OnInit {
       email: f.value.email,
       password: f.value.password,
     })
-    console.log(f)
   }
 }
