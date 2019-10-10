@@ -8,8 +8,8 @@ import { MatSidenav } from "@angular/material"
 })
 export class AppComponent {
   title = "fitness-tracker"
-  isSidenavVisible = false
 
+  /** DEPRECATED */
   @ViewChild("sidenav", { static: true })
   onToggle(sidenav: MatSidenav) {
     sidenav.toggle()
