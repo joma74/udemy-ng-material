@@ -1,4 +1,5 @@
 {
     "http.proxyStrictSSL": true,
-    "typescript.preferences.quoteStyle": "double"
+    "typescript.preferences.quoteStyle": "double",
+    "workbench.editor.enablePreview": false
 }
