@@ -11,11 +11,34 @@ export class TrainingService {
     { id: "burpees", name: "Burpees", duration: 60, calories: 8 },
   ]
   private runningExercise: Exercise
+  private pastExercises: Exercise[] = []
 
   exerciseChangedSubscription = new Subject<Exercise>()
 
   getAvailableExercises() {
     return this.availableExercises.slice()
+  }
+
+  onCompleteExercise() {
+    this.pastExercises.push({
+      ...this.runningExercise,
+      date: new Date(),
+      state: "COMPLETED",
+    })
+    this.runningExercise = null
+    this.exerciseChangedSubscription.next(null)
+  }
+
+  onCancelExercise(progress: number) {
+    this.pastExercises.push({
+      ...this.runningExercise,
+      duration: this.runningExercise.duration * (progress / 100),
+      calories: this.runningExercise.calories * (progress / 100),
+      date: new Date(),
+      state: "CANCELED",
+    })
+    this.runningExercise = null
+    this.exerciseChangedSubscription.next(null)
   }
 
   startExercise(selectedExerciseId: string) {
