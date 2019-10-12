@@ -32,8 +32,11 @@ export class TrainingService {
   onCancelExercise(progress: number) {
     this.pastExercises.push({
       ...this.runningExercise,
-      duration: this.runningExercise.duration * (progress / 100),
-      calories: this.runningExercise.calories * (progress / 100),
+      duration:
+        Math.floor(this.runningExercise.duration * (progress / 100) * 10) / 10,
+      calories:
+        Math.floor(this.runningExercise.calories * (progress / 100) * 100) /
+        100,
       date: new Date(),
       state: "CANCELED",
     })
@@ -51,5 +54,9 @@ export class TrainingService {
   getCurrentExercise() {
     const runningExerciseCpy: Exercise = { ...this.runningExercise }
     return runningExerciseCpy
+  }
+
+  getPastExercises() {
+    return this.pastExercises.slice()
   }
 }
