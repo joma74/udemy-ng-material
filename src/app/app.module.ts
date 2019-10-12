@@ -1,5 +1,7 @@
-import { NgModule } from "@angular/core"
+import { LOCALE_ID, NgModule } from "@angular/core"
 
+import { registerLocaleData } from "@angular/common"
+import localeDE from "@angular/common/locales/de"
 import { FlexLayoutModule } from "@angular/flex-layout"
 import { FormsModule, ReactiveFormsModule } from "@angular/forms"
 import { BrowserModule } from "@angular/platform-browser"
@@ -19,6 +21,8 @@ import { PastTrainingsComponent } from "./training/past-trainings/past-trainings
 import { TrainingComponent } from "./training/training.component"
 import { TrainingService } from "./training/training.service"
 import { WelcomeComponent } from "./welcome/welcome.component"
+
+registerLocaleData(localeDE)
 
 @NgModule({
   declarations: [
@@ -43,7 +47,14 @@ import { WelcomeComponent } from "./welcome/welcome.component"
     MaterialModule,
     ReactiveFormsModule,
   ],
-  providers: [AuthService, TrainingService],
+  providers: [
+    AuthService,
+    TrainingService,
+    {
+      provide: LOCALE_ID,
+      useValue: navigator.language,
+    },
+  ],
   bootstrap: [AppComponent],
   entryComponents: [StopTrainingComponent],
 })
