@@ -13,6 +13,7 @@ import {
   MatProgressSpinnerModule,
   MatSelectModule,
   MatSidenavModule,
+  MatSortModule,
   MatTableModule,
   MatTabsModule,
   MatToolbarModule,
@@ -36,6 +37,7 @@ import {
     MatProgressSpinnerModule,
     MatDialogModule,
     MatTableModule,
+    MatSortModule,
   ],
   exports: [
     MatButtonModule,
@@ -54,6 +56,7 @@ import {
     MatProgressSpinnerModule,
     MatDialogModule,
     MatTableModule,
+    MatSortModule,
   ],
 })
 export class MaterialModule {}

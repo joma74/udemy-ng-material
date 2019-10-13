@@ -9,3 +9,7 @@ table {
 .table-status {
   padding: 2em;
 }
+
+th.mat-sort-header-sorted {
+  color: black;
+}

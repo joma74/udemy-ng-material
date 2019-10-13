@@ -1,44 +1,47 @@
 <section class="past-trainings" fxLayout fxLayoutAlign="center">
   <mat-card fxFlex.xs="100%" fxFlex="80%">
-    <table mat-table [dataSource]="dataSource">
-      <ng-container [matColumnDef]="DISPLAYEDCOLUMNS[0]"
+    <table mat-table matSort [dataSource]="dataSource">
+      <ng-container [matColumnDef]="COLUMNAMESFROMPROPERTYKEYS[0]"
         ><th mat-header-cell *matHeaderCellDef mat-sort-header>
-          {{ DISPLAYEDCOLUMNS[0] }}
+          {{ COLUMNHEADERNAME[0] }}
         </th>
         <td mat-cell *matCellDef="let pastExercise">
           {{ pastExercise.name }}
         </td></ng-container
-      ><ng-container [matColumnDef]="DISPLAYEDCOLUMNS[1]"
+      ><ng-container [matColumnDef]="COLUMNAMESFROMPROPERTYKEYS[1]"
         ><th mat-header-cell *matHeaderCellDef mat-sort-header>
-          {{ DISPLAYEDCOLUMNS[1] }}
+          {{ COLUMNHEADERNAME[1] }}
         </th>
         <td mat-cell *matCellDef="let pastExercise">
           {{ pastExercise.duration | number: "1.2-2" }}
         </td></ng-container
-      ><ng-container [matColumnDef]="DISPLAYEDCOLUMNS[2]"
+      ><ng-container [matColumnDef]="COLUMNAMESFROMPROPERTYKEYS[2]"
         ><th mat-header-cell *matHeaderCellDef mat-sort-header>
-          {{ DISPLAYEDCOLUMNS[2] }}
+          {{ COLUMNHEADERNAME[2] }}
         </th>
         <td mat-cell *matCellDef="let pastExercise">
           {{ pastExercise.calories | number: "1.2-2" }}
         </td></ng-container
-      ><ng-container [matColumnDef]="DISPLAYEDCOLUMNS[3]"
+      ><ng-container [matColumnDef]="COLUMNAMESFROMPROPERTYKEYS[3]"
         ><th mat-header-cell *matHeaderCellDef mat-sort-header>
-          {{ DISPLAYEDCOLUMNS[3] }}
+          {{ COLUMNHEADERNAME[3] }}
         </th>
         <td mat-cell *matCellDef="let pastExercise">
           {{ pastExercise.date | date }}
         </td></ng-container
-      ><ng-container [matColumnDef]="DISPLAYEDCOLUMNS[4]"
+      ><ng-container [matColumnDef]="COLUMNAMESFROMPROPERTYKEYS[4]"
         ><th mat-header-cell *matHeaderCellDef mat-sort-header>
-          {{ DISPLAYEDCOLUMNS[4] }}
+          {{ COLUMNHEADERNAME[4] }}
         </th>
         <td mat-cell *matCellDef="let pastExercise">
           {{ pastExercise.state }}
         </td></ng-container
       >
-      <tr mat-header-row *matHeaderRowDef="DISPLAYEDCOLUMNS"></tr>
-      <tr mat-row *matRowDef="let row; columns: DISPLAYEDCOLUMNS"></tr>
+      <tr mat-header-row *matHeaderRowDef="COLUMNAMESFROMPROPERTYKEYS"></tr>
+      <tr
+        mat-row
+        *matRowDef="let row; columns: COLUMNAMESFROMPROPERTYKEYS"
+      ></tr>
     </table>
 
     <div
