@@ -9,14 +9,24 @@
           {{ pastExercise.name }}
         </td></ng-container
       ><ng-container [matColumnDef]="COLUMNAMESFROMPROPERTYKEYS[1]"
-        ><th mat-header-cell *matHeaderCellDef mat-sort-header>
+        ><th
+          mat-header-cell
+          *matHeaderCellDef
+          mat-sort-header
+          arrowPosition="before"
+        >
           {{ COLUMNHEADERNAME[1] }}
         </th>
         <td mat-cell *matCellDef="let pastExercise">
           {{ pastExercise.duration | number: "1.2-2" }}
         </td></ng-container
       ><ng-container [matColumnDef]="COLUMNAMESFROMPROPERTYKEYS[2]"
-        ><th mat-header-cell *matHeaderCellDef mat-sort-header>
+        ><th
+          mat-header-cell
+          *matHeaderCellDef
+          mat-sort-header
+          arrowPosition="before"
+        >
           {{ COLUMNHEADERNAME[2] }}
         </th>
         <td mat-cell *matCellDef="let pastExercise">

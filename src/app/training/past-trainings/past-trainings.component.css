@@ -13,3 +13,15 @@ table {
 th.mat-sort-header-sorted {
   color: black;
 }
+
+.mat-column-duration {
+  text-align: right;
+  justify-content: flex-end;
+  padding-right: 0.5rem;
+}
+
+.mat-column-calories {
+  text-align: right;
+  justify-content: flex-end;
+  padding-right: 0.5rem;
+}
