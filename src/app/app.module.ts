@@ -2,10 +2,13 @@ import { LOCALE_ID, NgModule } from "@angular/core"
 
 import { registerLocaleData } from "@angular/common"
 import localeDE from "@angular/common/locales/de"
+import { AngularFireModule } from "@angular/fire"
+import { AngularFirestoreModule } from "@angular/fire/firestore"
 import { FlexLayoutModule } from "@angular/flex-layout"
 import { FormsModule, ReactiveFormsModule } from "@angular/forms"
 import { BrowserModule } from "@angular/platform-browser"
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations"
+import { environment } from "../environments/environment"
 import { AppComponent } from "./app.component"
 import { AuthService } from "./auth/auth.service"
 import { LoginComponent } from "./auth/login/login.component"
@@ -46,6 +49,8 @@ registerLocaleData(localeDE)
     FormsModule,
     MaterialModule,
     ReactiveFormsModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFirestoreModule,
   ],
   providers: [
     AuthService,
