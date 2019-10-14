@@ -44,6 +44,10 @@ export class PastTrainingsComponent implements OnInit, AfterViewInit {
     // while in ngOnInit, these assignment MUST be done here at this stage
     this.dataSource.sort = this.sort
   }
+
+  doFilter(filterValue: string) {
+    this.dataSource.filter = filterValue.trim().toLowerCase()
+  }
 }
 
 /**
