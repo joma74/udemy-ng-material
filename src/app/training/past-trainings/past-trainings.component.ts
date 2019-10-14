@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from "@angular/core"
-import { MatSort, MatTableDataSource } from "@angular/material"
+import { MatPaginator, MatSort, MatTableDataSource } from "@angular/material"
 import { Exercise } from "../exercise.model"
 import { TrainingService } from "../training.service"
 
@@ -33,6 +33,9 @@ export class PastTrainingsComponent implements OnInit, AfterViewInit {
   @ViewChild(MatSort, { static: true })
   sort: MatSort
 
+  @ViewChild(MatPaginator, { static: true })
+  paginator: MatPaginator
+
   dataSource = new MatTableDataSource<Exercise>()
 
   ngOnInit() {
@@ -40,9 +43,10 @@ export class PastTrainingsComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    // Because sort given via ViewChild is not ready
-    // while in ngOnInit, these assignment MUST be done here at this stage
+    // Because sort and paginator given via ViewChild is not ready
+    // while in ngOnInit, the following assignments MUST be done here at this stage
     this.dataSource.sort = this.sort
+    this.dataSource.paginator = this.paginator
   }
 
   doFilter(filterValue: string) {
