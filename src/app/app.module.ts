@@ -3,6 +3,7 @@ import { LOCALE_ID, NgModule } from "@angular/core"
 import { registerLocaleData } from "@angular/common"
 import localeDE from "@angular/common/locales/de"
 import { AngularFireModule } from "@angular/fire"
+import { AngularFireAuthModule } from "@angular/fire/auth"
 import { AngularFirestoreModule } from "@angular/fire/firestore"
 import { FlexLayoutModule } from "@angular/flex-layout"
 import { FormsModule, ReactiveFormsModule } from "@angular/forms"
@@ -48,6 +49,7 @@ registerLocaleData(localeDE)
     FlexLayoutModule,
     FormsModule,
     MaterialModule,
+    AngularFireAuthModule,
     ReactiveFormsModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
