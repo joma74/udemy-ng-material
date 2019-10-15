@@ -44,6 +44,8 @@ export class TrainingService {
     this.pastExercises.push(
       this.persistAsPastExercise({
         ...this.runningExercise,
+        duration: toFixed(this.runningExercise.duration, 1),
+        calories: toFixed(this.runningExercise.calories, 2),
         date: new Date(),
         state: "COMPLETED",
       }),
@@ -56,12 +58,8 @@ export class TrainingService {
     this.pastExercises.push(
       this.persistAsPastExercise({
         ...this.runningExercise,
-        duration:
-          Math.floor(this.runningExercise.duration * (progress / 100) * 10) /
-          10,
-        calories:
-          Math.floor(this.runningExercise.calories * (progress / 100) * 100) /
-          100,
+        duration: toFixed(this.runningExercise.duration * (progress / 100), 1),
+        calories: toFixed(this.runningExercise.calories * (progress / 100), 2),
         date: new Date(),
         state: "CANCELED",
       }),
@@ -90,4 +88,16 @@ export class TrainingService {
     this.db.collection("pastExercises").add(exercise)
     return exercise
   }
+}
+
+function toFixed(decimal: number, digits: number) {
+  if (digits === undefined || digits < 0 || digits > 20) {
+    throw new RangeError("digits must be between 1 and 20 inclusive")
+  }
+  if (decimal === undefined || decimal === null) {
+    throw new TypeError("decimal must not be null or undefined")
+  }
+  const factor = Math.pow(10, digits)
+  const result = Math.floor(decimal * factor) / factor
+  return result
 }
