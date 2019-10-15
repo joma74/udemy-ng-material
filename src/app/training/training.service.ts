@@ -4,20 +4,23 @@ import { Subject } from "rxjs"
 import { map } from "rxjs/operators"
 import { Exercise } from "./exercise.model"
 
+const AVAIL_EXERS_COLNAME = "availableExercises"
+const PAST_EXERS_COLNAME = "pastExercises"
+
 @Injectable()
 export class TrainingService {
   private runningExercise: Exercise
   private availableExercises: Exercise[] = []
-  private pastExercises: Exercise[] = []
 
   constructor(private db: AngularFirestore) {}
 
   exerciseChangedSubscription = new Subject<Exercise>()
   availableExercisesChangedSubscription = new Subject<Exercise[]>()
+  pastExercisesChangedSubscription = new Subject<Exercise[]>()
 
   fetchAvailableExercises() {
     this.db
-      .collection("availableExercises")
+      .collection(AVAIL_EXERS_COLNAME)
       .snapshotChanges()
       .pipe(
         map((docArray) => {
@@ -40,34 +43,6 @@ export class TrainingService {
       })
   }
 
-  onCompleteExercise() {
-    this.pastExercises.push(
-      this.persistAsPastExercise({
-        ...this.runningExercise,
-        duration: toFixed(this.runningExercise.duration, 1),
-        calories: toFixed(this.runningExercise.calories, 2),
-        date: new Date(),
-        state: "COMPLETED",
-      }),
-    )
-    this.runningExercise = null
-    this.exerciseChangedSubscription.next(null)
-  }
-
-  onCancelExercise(progress: number) {
-    this.pastExercises.push(
-      this.persistAsPastExercise({
-        ...this.runningExercise,
-        duration: toFixed(this.runningExercise.duration * (progress / 100), 1),
-        calories: toFixed(this.runningExercise.calories * (progress / 100), 2),
-        date: new Date(),
-        state: "CANCELED",
-      }),
-    )
-    this.runningExercise = null
-    this.exerciseChangedSubscription.next(null)
-  }
-
   startExercise(selectedExerciseId: string) {
     this.runningExercise = this.availableExercises.find(
       (ex) => selectedExerciseId === ex.id,
@@ -75,17 +50,48 @@ export class TrainingService {
     this.exerciseChangedSubscription.next({ ...this.runningExercise })
   }
 
+  onCompleteExercise() {
+    this.persistAsPastExercise({
+      ...this.runningExercise,
+      duration: toFixed(this.runningExercise.duration, 1),
+      calories: toFixed(this.runningExercise.calories, 2),
+      date: new Date(),
+      state: "COMPLETED",
+    })
+    this.runningExercise = null
+    this.exerciseChangedSubscription.next(null)
+  }
+
+  onCancelExercise(progress: number) {
+    this.persistAsPastExercise({
+      ...this.runningExercise,
+      duration: toFixed(this.runningExercise.duration * (progress / 100), 1),
+      calories: toFixed(this.runningExercise.calories * (progress / 100), 2),
+      date: new Date(),
+      state: "CANCELED",
+    })
+    this.runningExercise = null
+    this.exerciseChangedSubscription.next(null)
+  }
+
   getCurrentExercise() {
     const runningExerciseCpy: Exercise = { ...this.runningExercise }
     return runningExerciseCpy
   }
 
-  getPastExercises() {
-    return this.pastExercises.slice()
+  fetchPastExercises() {
+    this.db
+      .collection(PAST_EXERS_COLNAME)
+      .valueChanges()
+      .subscribe({
+        next: (pastExercises: Exercise[]) => {
+          this.pastExercisesChangedSubscription.next([...pastExercises])
+        },
+      })
   }
 
   private persistAsPastExercise(exercise: Exercise) {
-    this.db.collection("pastExercises").add(exercise)
+    this.db.collection(PAST_EXERS_COLNAME).add(exercise)
     return exercise
   }
 }

@@ -44,7 +44,7 @@
           {{ COLUMNHEADERNAME[3] }}
         </th>
         <td mat-cell *matCellDef="let pastExercise">
-          {{ pastExercise.date | date }}
+          {{ pastExercise.date.toMillis() | date }}
         </td></ng-container
       ><ng-container [matColumnDef]="COLUMNAMESFROMPROPERTYKEYS[4]"
         ><th mat-header-cell *matHeaderCellDef mat-sort-header>
