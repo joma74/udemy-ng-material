@@ -13,7 +13,7 @@ export class TrainingService {
   constructor(private db: AngularFirestore) {}
 
   exerciseChangedSubscription = new Subject<Exercise>()
-  exercisesChangedSubscription = new Subject<Exercise[]>()
+  availableExercisesChangedSubscription = new Subject<Exercise[]>()
 
   fetchAvailableExercises() {
     this.db
@@ -33,32 +33,39 @@ export class TrainingService {
       .subscribe({
         next: (availableExercises: Exercise[]) => {
           this.availableExercises = availableExercises
-          this.exercisesChangedSubscription.next([...availableExercises])
+          this.availableExercisesChangedSubscription.next([
+            ...availableExercises,
+          ])
         },
       })
   }
 
   onCompleteExercise() {
-    this.pastExercises.push({
-      ...this.runningExercise,
-      date: new Date(),
-      state: "COMPLETED",
-    })
+    this.pastExercises.push(
+      this.persistAsPastExercise({
+        ...this.runningExercise,
+        date: new Date(),
+        state: "COMPLETED",
+      }),
+    )
     this.runningExercise = null
     this.exerciseChangedSubscription.next(null)
   }
 
   onCancelExercise(progress: number) {
-    this.pastExercises.push({
-      ...this.runningExercise,
-      duration:
-        Math.floor(this.runningExercise.duration * (progress / 100) * 10) / 10,
-      calories:
-        Math.floor(this.runningExercise.calories * (progress / 100) * 100) /
-        100,
-      date: new Date(),
-      state: "CANCELED",
-    })
+    this.pastExercises.push(
+      this.persistAsPastExercise({
+        ...this.runningExercise,
+        duration:
+          Math.floor(this.runningExercise.duration * (progress / 100) * 10) /
+          10,
+        calories:
+          Math.floor(this.runningExercise.calories * (progress / 100) * 100) /
+          100,
+        date: new Date(),
+        state: "CANCELED",
+      }),
+    )
     this.runningExercise = null
     this.exerciseChangedSubscription.next(null)
   }
@@ -77,5 +84,10 @@ export class TrainingService {
 
   getPastExercises() {
     return this.pastExercises.slice()
+  }
+
+  private persistAsPastExercise(exercise: Exercise) {
+    this.db.collection("pastExercises").add(exercise)
+    return exercise
   }
 }
