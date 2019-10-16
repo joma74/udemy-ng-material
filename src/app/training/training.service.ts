@@ -16,11 +16,7 @@ export class TrainingService {
 
   private firebaseSubs: Subscription[] = []
 
-  constructor(
-    private db: AngularFirestore,
-    private snackBar: MatSnackBar,
-    private uiService: UIService,
-  ) {}
+  constructor(private db: AngularFirestore, private uiService: UIService) {}
 
   exerciseChangedSubscription = new Subject<Exercise>()
   availableExercisesChangedSubscription = new Subject<Exercise[]>()
@@ -53,7 +49,7 @@ export class TrainingService {
           },
           error: (error) => {
             this.uiService.loadingStateChanged.next(false)
-            this.snackBar.open(error.message, null)
+            this.uiService.showSnackbar(error.message)
           },
         }),
     )
@@ -108,7 +104,7 @@ export class TrainingService {
           },
           error: (error) => {
             this.uiService.loadingStateChanged.next(false)
-            this.snackBar.open(error.message, null)
+            this.uiService.showSnackbar(error.message)
           },
         }),
     )
