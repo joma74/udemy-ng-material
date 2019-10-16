@@ -1,7 +1,9 @@
 import { Injectable } from "@angular/core"
 import { AngularFirestore } from "@angular/fire/firestore"
+import { MatSnackBar } from "@angular/material"
 import { Subject, Subscription } from "rxjs"
 import { map } from "rxjs/operators"
+import { UIService } from "../shared/ui.service"
 import { Exercise } from "./exercise.model"
 
 const AVAIL_EXERS_COLLNAME = "availableExercises"
@@ -14,13 +16,18 @@ export class TrainingService {
 
   private firebaseSubs: Subscription[] = []
 
-  constructor(private db: AngularFirestore) {}
+  constructor(
+    private db: AngularFirestore,
+    private snackBar: MatSnackBar,
+    private uiService: UIService,
+  ) {}
 
   exerciseChangedSubscription = new Subject<Exercise>()
   availableExercisesChangedSubscription = new Subject<Exercise[]>()
   pastExercisesChangedSubscription = new Subject<Exercise[]>()
 
   fetchAvailableExercises() {
+    this.uiService.loadingStateChanged.next(true)
     this.firebaseSubs.push(
       this.db
         .collection(AVAIL_EXERS_COLLNAME)
@@ -42,6 +49,11 @@ export class TrainingService {
             this.availableExercisesChangedSubscription.next([
               ...availableExercises,
             ])
+            this.uiService.loadingStateChanged.next(false)
+          },
+          error: (error) => {
+            this.uiService.loadingStateChanged.next(false)
+            this.snackBar.open(error.message, null)
           },
         }),
     )
@@ -84,6 +96,7 @@ export class TrainingService {
   }
 
   fetchPastExercises() {
+    this.uiService.loadingStateChanged.next(true)
     this.firebaseSubs.push(
       this.db
         .collection(PAST_EXERS_COLLNAME)
@@ -91,9 +104,11 @@ export class TrainingService {
         .subscribe({
           next: (pastExercises: Exercise[]) => {
             this.pastExercisesChangedSubscription.next([...pastExercises])
+            this.uiService.loadingStateChanged.next(false)
           },
           error: (error) => {
-            // NOP
+            this.uiService.loadingStateChanged.next(false)
+            this.snackBar.open(error.message, null)
           },
         }),
     )
