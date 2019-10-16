@@ -4,8 +4,8 @@ import { Subject, Subscription } from "rxjs"
 import { map } from "rxjs/operators"
 import { Exercise } from "./exercise.model"
 
-const AVAIL_EXERS_COLNAME = "availableExercises"
-const PAST_EXERS_COLNAME = "pastExercises"
+const AVAIL_EXERS_COLLNAME = "availableExercises"
+const PAST_EXERS_COLLNAME = "pastExercises"
 
 @Injectable()
 export class TrainingService {
@@ -23,7 +23,7 @@ export class TrainingService {
   fetchAvailableExercises() {
     this.firebaseSubs.push(
       this.db
-        .collection(AVAIL_EXERS_COLNAME)
+        .collection(AVAIL_EXERS_COLLNAME)
         .snapshotChanges()
         .pipe(
           map((docArray) => {
@@ -86,7 +86,7 @@ export class TrainingService {
   fetchPastExercises() {
     this.firebaseSubs.push(
       this.db
-        .collection(PAST_EXERS_COLNAME)
+        .collection(PAST_EXERS_COLLNAME)
         .valueChanges()
         .subscribe({
           next: (pastExercises: Exercise[]) => {
@@ -100,7 +100,7 @@ export class TrainingService {
   }
 
   private persistAsPastExercise(exercise: Exercise) {
-    this.db.collection(PAST_EXERS_COLNAME).add(exercise)
+    this.db.collection(PAST_EXERS_COLLNAME).add(exercise)
     return exercise
   }
 
