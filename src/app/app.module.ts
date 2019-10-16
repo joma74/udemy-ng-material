@@ -7,6 +7,7 @@ import { AngularFireAuthModule } from "@angular/fire/auth"
 import { AngularFirestoreModule } from "@angular/fire/firestore"
 import { FlexLayoutModule } from "@angular/flex-layout"
 import { FormsModule, ReactiveFormsModule } from "@angular/forms"
+import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from "@angular/material"
 import { BrowserModule } from "@angular/platform-browser"
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations"
 import { environment } from "../environments/environment"
@@ -61,6 +62,7 @@ registerLocaleData(localeDE)
       provide: LOCALE_ID,
       useValue: navigator.language,
     },
+    { provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: { duration: 5000 } },
   ],
   bootstrap: [AppComponent],
   entryComponents: [StopTrainingComponent],
