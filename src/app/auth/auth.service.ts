@@ -3,6 +3,7 @@ import { AngularFireAuth } from "@angular/fire/auth"
 import { MatSnackBar } from "@angular/material"
 import { Router } from "@angular/router"
 import { Subject } from "rxjs"
+import { UIService } from "../shared/ui.service"
 import { TrainingService } from "../training/training.service"
 import { AuthData } from "./auth-data.mode"
 
@@ -16,6 +17,7 @@ export class AuthService {
     private afAuth: AngularFireAuth,
     private trainingService: TrainingService,
     private snackBar: MatSnackBar,
+    private uiService: UIService,
   ) {}
 
   initAuthListener() {
@@ -34,23 +36,29 @@ export class AuthService {
   }
 
   registerUser(authData: AuthData) {
+    this.uiService.loadingStateChanged.next(true)
     this.afAuth.auth
       .createUserWithEmailAndPassword(authData.email, authData.password)
       .then((result) => {
+        this.uiService.loadingStateChanged.next(false)
         // NOP
       })
       .catch((error) => {
+        this.uiService.loadingStateChanged.next(false)
         this.snackBar.open(error.message, null)
       })
   }
 
   login(authData: AuthData) {
+    this.uiService.loadingStateChanged.next(true)
     this.afAuth.auth
       .signInWithEmailAndPassword(authData.email, authData.password)
       .then((result) => {
+        this.uiService.loadingStateChanged.next(false)
         // NOP
       })
       .catch((error) => {
+        this.uiService.loadingStateChanged.next(false)
         this.snackBar.open(error.message, null)
       })
   }

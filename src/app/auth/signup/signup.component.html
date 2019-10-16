@@ -58,9 +58,12 @@
       type="submit"
       mat-raised-button
       color="primary"
-      [disabled]="f.invalid"
+      [disabled]="f.invalid || isLoading"
     >
       Submit
+      <div class="position-center position-absolute" [class.hide]="!isLoading">
+        <div class="spinner"></div>
+      </div>
     </button>
   </form>
 </section>

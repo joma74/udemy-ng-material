@@ -19,6 +19,7 @@ import { MaterialModule } from "./material/material.module"
 import { HeaderComponent } from "./navigation/header/header.component"
 import { SidenavListComponent } from "./navigation/sidenav-list/sidenav-list.component"
 import { AppRoutingModule } from "./routing/app-routing.module"
+import { UIService } from "./shared/ui.service"
 import { CurrentTrainingComponent } from "./training/current-training/current-training.component"
 import { StopTrainingComponent } from "./training/current-training/stop-training.component"
 import { NewTrainingComponent } from "./training/new-training/new-training.component"
@@ -63,6 +64,7 @@ registerLocaleData(localeDE)
       useValue: navigator.language,
     },
     { provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: { duration: 5000 } },
+    UIService,
   ],
   bootstrap: [AppComponent],
   entryComponents: [StopTrainingComponent],

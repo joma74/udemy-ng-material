@@ -11,3 +11,38 @@ body {
 body {
   margin: 0;
 }
+
+/* position utility */
+
+.position-center {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.position-absolute {
+  content: "";
+  box-sizing: border-box;
+  position: absolute;
+}
+
+.hide {
+  display: none;
+}
+
+/* spinner */
+
+@keyframes spinner {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.spinner {
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+  border: 0.2rem solid #ffffff;
+  border-top-color: #3f51b5;
+  animation: spinner 0.8s linear infinite;
+}
