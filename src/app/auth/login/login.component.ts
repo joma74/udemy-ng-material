@@ -10,12 +10,12 @@ import { AuthService } from "../auth.service"
   styleUrls: ["./login.component.css"],
 })
 export class LoginComponent implements OnInit, OnDestroy {
+  constructor(private authService: AuthService, private uiService: UIService) {}
+
   loginForm: FormGroup
   isLoading: boolean
 
   loadingStateChangedSubscription: Subscription
-
-  constructor(private authService: AuthService, private uiService: UIService) {}
 
   ngOnInit() {
     this.loadingStateChangedSubscription = this.uiService.loadingStateChanged.subscribe(
