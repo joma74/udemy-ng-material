@@ -1,6 +1,5 @@
 import { Injectable } from "@angular/core"
 import { AngularFirestore } from "@angular/fire/firestore"
-import { MatSnackBar } from "@angular/material"
 import { Subject, Subscription } from "rxjs"
 import { map } from "rxjs/operators"
 import { UIService } from "../shared/ui.service"
