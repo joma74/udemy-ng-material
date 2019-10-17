@@ -1,9 +1,11 @@
 import { Component, OnDestroy, OnInit } from "@angular/core"
 import { FormControl, FormGroup, NgForm, Validators } from "@angular/forms"
+import { AutoUnsubscribe } from "ngx-auto-unsubscribe"
 import { Subscription } from "rxjs"
 import { UIService } from "../../shared/ui.service"
 import { AuthService } from "../auth.service"
 
+@AutoUnsubscribe()
 @Component({
   selector: "app-login",
   templateUrl: "./login.component.html",
@@ -30,8 +32,9 @@ export class LoginComponent implements OnInit, OnDestroy {
     })
   }
 
-  ngOnDestroy(): void {
-    this.loadingStateChangedSubscription.unsubscribe()
+  // This method must be present, even if empty.
+  ngOnDestroy() {
+    // AutoUnsubscribe will throw an error if it doesn't
   }
 
   onSubmit() {

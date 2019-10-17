@@ -6,10 +6,12 @@ import {
   ViewChild,
 } from "@angular/core"
 import { MatPaginator, MatSort, MatTableDataSource } from "@angular/material"
+import { AutoUnsubscribe } from "ngx-auto-unsubscribe"
 import { Subscription } from "rxjs"
 import { Exercise } from "../exercise.model"
 import { TrainingService } from "../training.service"
 
+@AutoUnsubscribe()
 @Component({
   selector: "app-past-trainings",
   templateUrl: "./past-trainings.component.html",
@@ -57,8 +59,9 @@ export class PastTrainingsComponent
     this.trainingService.fetchPastExercises()
   }
 
-  ngOnDestroy(): void {
-    this.pastExercisesChangedSubscription.unsubscribe()
+  // This method must be present, even if empty.
+  ngOnDestroy() {
+    // AutoUnsubscribe will throw an error if it doesn't
   }
 
   ngAfterViewInit() {

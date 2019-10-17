@@ -1,9 +1,11 @@
 import { Component, OnDestroy, OnInit } from "@angular/core"
 import { NgForm } from "@angular/forms"
+import { AutoUnsubscribe } from "ngx-auto-unsubscribe"
 import { Subscription } from "rxjs"
 import { UIService } from "../../shared/ui.service"
 import { AuthService } from "../auth.service"
 
+@AutoUnsubscribe()
 @Component({
   selector: "app-signup",
   templateUrl: "./signup.component.html",
@@ -26,8 +28,9 @@ export class SignupComponent implements OnInit, OnDestroy {
     this.maxDate.setFullYear(this.maxDate.getFullYear() - 18)
   }
 
-  ngOnDestroy(): void {
-    this.loadingStateChangedSubscription.unsubscribe()
+  // This method must be present, even if empty.
+  ngOnDestroy() {
+    // AutoUnsubscribe will throw an error if it doesn't
   }
 
   onSubmit(f: NgForm) {

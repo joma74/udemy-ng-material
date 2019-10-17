@@ -5,9 +5,11 @@ import {
   OnInit,
   Output,
 } from "@angular/core"
+import { AutoUnsubscribe } from "ngx-auto-unsubscribe"
 import { Subscription } from "rxjs"
 import { AuthService } from "../../auth/auth.service"
 
+@AutoUnsubscribe()
 @Component({
   selector: "app-header",
   templateUrl: "./header.component.html",
@@ -29,8 +31,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
     )
   }
 
-  ngOnDestroy(): void {
-    this.authSubscription.unsubscribe()
+  // This method must be present, even if empty.
+  ngOnDestroy() {
+    // AutoUnsubscribe will throw an error if it doesn't
   }
 
   onToggleSidenav() {

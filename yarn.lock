@@ -10,14 +10,6 @@
     "@angular-devkit/core" "8.3.10"
     rxjs "6.4.0"
 
-"@angular-devkit/architect@0.803.9":
-  version "0.803.9"
-  resolved "https://registry.yarnpkg.com/@angular-devkit/architect/-/architect-0.803.9.tgz#23467be9d844f0c730f9eba6edce40fbdee44287"
-  integrity sha512-grbnPxZ8vnd1UWQUWdJKBxsG8kD6Pj9XtTOEqKg5gH9Vha1zKkEnROWG18TFZzHrJffCE8E18c0OgDIjz+pL3g==
-  dependencies:
-    "@angular-devkit/core" "8.3.9"
-    rxjs "6.4.0"
-
 "@angular-devkit/build-angular@~0.803.5":
   version "0.803.10"
   resolved "https://registry.yarnpkg.com/@angular-devkit/build-angular/-/build-angular-0.803.10.tgz#30a964570b105e293a41eeb866177b13ee4e0a97"
@@ -104,28 +96,6 @@
   version "8.3.10"
   resolved "https://registry.yarnpkg.com/@angular-devkit/core/-/core-8.3.10.tgz#c7aa228e31f10c0cdf8ae4b8cbb391a6a63860a2"
   integrity sha512-qDqgOGOL3arCTF3u7DRCWGKhcU1N6d1Bb1ynBh1b30krLIQbZTXRToz5VovN4sxOvxN8xV0NjFaXpsRAIC2QfQ==
-  dependencies:
-    ajv "6.10.2"
-    fast-json-stable-stringify "2.0.0"
-    magic-string "0.25.3"
-    rxjs "6.4.0"
-    source-map "0.7.3"
-
-"@angular-devkit/core@8.3.10":
-  version "8.3.10"
-  resolved "https://registry.yarnpkg.com/@angular-devkit/core/-/core-8.3.10.tgz#c7aa228e31f10c0cdf8ae4b8cbb391a6a63860a2"
-  integrity sha512-qDqgOGOL3arCTF3u7DRCWGKhcU1N6d1Bb1ynBh1b30krLIQbZTXRToz5VovN4sxOvxN8xV0NjFaXpsRAIC2QfQ==
-  dependencies:
-    ajv "6.10.2"
-    fast-json-stable-stringify "2.0.0"
-    magic-string "0.25.3"
-    rxjs "6.4.0"
-    source-map "0.7.3"
-
-"@angular-devkit/core@8.3.9":
-  version "8.3.9"
-  resolved "https://registry.yarnpkg.com/@angular-devkit/core/-/core-8.3.9.tgz#72093bdbef278077f15f66423e2abc6bd2104d0a"
-  integrity sha512-LYNdY8UpcEGaqWq0smPhSAiz+Oq1gv4j1LGLLyY1d2CJpf4czIuI8SkTHtmGMjpKy8ss/Vk1mHwRjBrWB0dUag==
   dependencies:
     ajv "6.10.2"
     fast-json-stable-stringify "2.0.0"
@@ -6562,6 +6532,11 @@ neo-async@^2.5.0, neo-async@^2.6.0, neo-async@^2.6.1:
   version "2.6.1"
   resolved "https://registry.yarnpkg.com/neo-async/-/neo-async-2.6.1.tgz#ac27ada66167fa8849a6addd837f6b189ad2081c"
   integrity sha512-iyam8fBuCUpWeKPGpaNMetEocMt364qkCsfL9JuhjXX6dRnguRVOfk2GZaDpPjcOKiiXCPINZC1GczQ7iTq3Zw==
+
+ngx-auto-unsubscribe@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/ngx-auto-unsubscribe/-/ngx-auto-unsubscribe-3.0.1.tgz#b4970bb2c1289411a5e6a1e5ab175593cc9e76eb"
+  integrity sha512-Yp3o2HxjGYNv2yZ0QwR5Wkh6Al3b07J3v7hhcdZhqm7DTJuXMmisaNi5zhnXq2+7rtCg0jaTBsA/SWhtS7zZbw==
 
 nice-try@^1.0.4:
   version "1.0.5"
