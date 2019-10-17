@@ -1,13 +1,15 @@
-import { Component, OnInit } from "@angular/core"
+import { Component, OnDestroy, OnInit } from "@angular/core"
+import { AutoUnsubscribe } from "ngx-auto-unsubscribe"
 import { Subscription } from "rxjs"
 import { TrainingService } from "./training.service"
 
+@AutoUnsubscribe()
 @Component({
   selector: "app-training",
   templateUrl: "./training.component.html",
   styleUrls: ["./training.component.css"],
 })
-export class TrainingComponent implements OnInit {
+export class TrainingComponent implements OnInit, OnDestroy {
   ongoingTraining = false
   exerciseChangedSubscription: Subscription
   constructor(private trainingService: TrainingService) {}
@@ -20,5 +22,10 @@ export class TrainingComponent implements OnInit {
           : (this.ongoingTraining = false)
       },
     )
+  }
+
+  // This method must be present, even if empty.
+  ngOnDestroy() {
+    // AutoUnsubscribe will throw an error if it doesn't
   }
 }
