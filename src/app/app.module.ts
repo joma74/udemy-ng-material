@@ -3,6 +3,7 @@ import { LOCALE_ID, NgModule } from "@angular/core"
 import { registerLocaleData } from "@angular/common"
 import localeDE from "@angular/common/locales/de"
 import { AngularFireModule } from "@angular/fire"
+import { AngularFirestoreModule } from "@angular/fire/firestore"
 import { FlexLayoutModule } from "@angular/flex-layout"
 import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from "@angular/material"
 import { BrowserModule } from "@angular/platform-browser"
@@ -16,7 +17,6 @@ import { HeaderComponent } from "./navigation/header/header.component"
 import { SidenavListComponent } from "./navigation/sidenav-list/sidenav-list.component"
 import { AppRoutingModule } from "./routing/app-routing.module"
 import { UIService } from "./shared/ui.service"
-import { TrainingModule } from "./training/training.module"
 import { TrainingService } from "./training/training.service"
 import { WelcomeComponent } from "./welcome/welcome.component"
 
@@ -37,7 +37,8 @@ registerLocaleData(localeDE)
     BrowserAnimationsModule,
     FlexLayoutModule,
     MaterialModule,
-    TrainingModule,
+    // Required by TrainingService, which is required by AuthService
+    AngularFirestoreModule,
   ],
   providers: [
     AuthService,

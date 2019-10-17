@@ -3,10 +3,18 @@ import { RouterModule, Routes } from "@angular/router"
 import { AuthGuard } from "../auth/auth-guard.service"
 import { WelcomeComponent } from "../welcome/welcome.component"
 
-const routes: Routes = [{ path: "", component: WelcomeComponent }]
+const routes: Routes = [
+  { path: "", component: WelcomeComponent },
+  {
+    path: "training",
+    loadChildren: "./../training/training.module#TrainingModule",
+    canLoad: [AuthGuard],
+  },
+]
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
+  providers: [AuthGuard],
 })
 export class AppRoutingModule {}

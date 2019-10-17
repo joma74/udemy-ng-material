@@ -4,12 +4,11 @@ import { AuthGuard } from "../auth/auth-guard.service"
 import { TrainingComponent } from "./training.component"
 
 const routes: Routes = [
-  { path: "training", component: TrainingComponent, canActivate: [AuthGuard] },
+  { path: "", component: TrainingComponent, canActivate: [AuthGuard] },
 ]
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
-  providers: [AuthGuard],
 })
 export class TrainingRoutingModule {}
