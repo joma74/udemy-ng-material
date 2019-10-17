@@ -94,7 +94,7 @@ export class TrainingService {
     this.uiService.loadingStateChanged.next(true)
     this.firebaseSubs.push(
       this.db
-        .collection(PAST_EXERS_COLLNAME)
+        .collection(PAST_EXERS_COLLNAME, (ref) => ref.orderBy("date", "desc"))
         .valueChanges()
         .subscribe({
           next: (pastExercises: Exercise[]) => {
