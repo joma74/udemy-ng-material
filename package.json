@@ -17,11 +17,12 @@
     "ng": "ng",
     "serve": "ng serve",
     "serve-dev": "ng serve --liveReload=true --configuration hmr",
-    "build": "ng build",
+    "build": "ng build --prod ",
     "test-once": "yarn test-watch --watch=false",
     "test-watch": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
+    "build-prod": "ng build --prod --stats-json",
     "ci": "run-s -l clean-target _lint _prettier tsc-validate-once",
     "postinstall": "make-dir dist target"
   },
@@ -93,7 +94,8 @@
     "tslint-config-prettier": "^1.18.0",
     "tslint-eslint-rules": "^5.4.0",
     "tslint-plugin-prettier": "^2.0.1",
-    "typescript": "~3.5.3"
+    "typescript": "~3.5.3",
+    "webpack-bundle-analyzer": "^3.6.0"
   },
   "engineStrict": true,
   "engines": {
