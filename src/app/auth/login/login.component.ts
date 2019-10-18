@@ -3,7 +3,6 @@ import { FormControl, FormGroup, Validators } from "@angular/forms"
 import { Store } from "@ngrx/store"
 import { AutoUnsubscribe } from "ngx-auto-unsubscribe"
 import { Observable, Subscription } from "rxjs"
-import { map } from "rxjs/operators"
 import * as fromApp from "../../app.reducer"
 import { AuthService } from "../auth.service"
 
@@ -16,16 +15,14 @@ import { AuthService } from "../auth.service"
 export class LoginComponent implements OnInit, OnDestroy {
   constructor(
     private authService: AuthService,
-    private store: Store<{ ui: fromApp.UIState }>,
+    private store: Store<fromApp.State>,
   ) {}
 
   loginForm: FormGroup
   isLoading$: Observable<boolean>
 
-  loadingStateChangedSub: Subscription
-
   ngOnInit() {
-    this.isLoading$ = this.store.pipe(map((state) => state.ui.isLoading))
+    this.isLoading$ = this.store.select(fromApp.getIsLoading)
     this.loginForm = new FormGroup({
       email: new FormControl("", {
         validators: [Validators.required, Validators.email],

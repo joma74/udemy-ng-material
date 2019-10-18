@@ -3,7 +3,6 @@ import { NgForm } from "@angular/forms"
 import { Store } from "@ngrx/store"
 import { AutoUnsubscribe } from "ngx-auto-unsubscribe"
 import { Observable, Subscription } from "rxjs"
-import { map } from "rxjs/operators"
 import * as fromApp from "../../app.reducer"
 import { AuthService } from "../auth.service"
 
@@ -17,15 +16,13 @@ export class SignupComponent implements OnInit, OnDestroy {
   maxDate: Date
   isLoading$: Observable<boolean>
 
-  loadingStateChangedSub: Subscription
-
   constructor(
     private authService: AuthService,
-    private store: Store<{ ui: fromApp.UIState }>,
+    private store: Store<fromApp.State>,
   ) {}
 
   ngOnInit() {
-    this.isLoading$ = this.store.pipe(map((state) => state.ui.isLoading))
+    this.isLoading$ = this.store.select(fromApp.getIsLoading)
     //
     this.maxDate = new Date()
     this.maxDate.setFullYear(this.maxDate.getFullYear() - 18)

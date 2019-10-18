@@ -4,6 +4,7 @@ import { Router } from "@angular/router"
 import { Store } from "@ngrx/store"
 import { Subject } from "rxjs"
 import * as fromApp from "../app.reducer"
+import * as UI from "../shared/ui.actions"
 import { UIService } from "../shared/ui.service"
 import { TrainingService } from "../training/training.service"
 import { AuthData } from "./auth-data.mode"
@@ -18,7 +19,7 @@ export class AuthService {
     private afAuth: AngularFireAuth,
     private trainingService: TrainingService,
     private uiService: UIService,
-    private store: Store<{ ui: fromApp.UIState }>,
+    private store: Store<fromApp.State>,
   ) {}
 
   initAuthListener() {
@@ -37,29 +38,29 @@ export class AuthService {
   }
 
   registerUser(authData: AuthData) {
-    this.store.dispatch(new fromApp.StartLoading())
+    this.store.dispatch(new UI.StartLoading())
     this.afAuth.auth
       .createUserWithEmailAndPassword(authData.email, authData.password)
       .then((result) => {
-        this.store.dispatch(new fromApp.StopLoading())
+        this.store.dispatch(new UI.StopLoading())
         // NOP
       })
       .catch((error) => {
-        this.store.dispatch(new fromApp.StopLoading())
+        this.store.dispatch(new UI.StopLoading())
         this.uiService.showSnackbar(error.message)
       })
   }
 
   login(authData: AuthData) {
-    this.store.dispatch(new fromApp.StartLoading())
+    this.store.dispatch(new UI.StartLoading())
     this.afAuth.auth
       .signInWithEmailAndPassword(authData.email, authData.password)
       .then((result) => {
-        this.store.dispatch(new fromApp.StopLoading())
+        this.store.dispatch(new UI.StopLoading())
         // NOP
       })
       .catch((error) => {
-        this.store.dispatch(new fromApp.StopLoading())
+        this.store.dispatch(new UI.StopLoading())
         this.uiService.showSnackbar(error.message)
       })
   }

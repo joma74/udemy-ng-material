@@ -11,7 +11,7 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations"
 import { StoreModule } from "@ngrx/store"
 import { environment } from "../environments/environment"
 import { AppComponent } from "./app.component"
-import { appReducer } from "./app.reducer"
+import { appReducers } from "./app.reducer"
 import { AuthModule } from "./auth/auth.module"
 import { AuthService } from "./auth/auth.service"
 import { MaterialModule } from "./material/material.module"
@@ -41,7 +41,7 @@ registerLocaleData(localeDE)
     MaterialModule,
     // Required by TrainingService, which is required by AuthService
     AngularFirestoreModule,
-    StoreModule.forRoot({ ui: appReducer }),
+    StoreModule.forRoot(appReducers),
   ],
   providers: [
     AuthService,

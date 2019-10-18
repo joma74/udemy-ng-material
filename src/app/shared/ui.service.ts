@@ -6,8 +6,6 @@ import { Subject } from "rxjs"
 export class UIService {
   constructor(private snackbar: MatSnackBar) {}
 
-  loadingStateChanged = new Subject<boolean>()
-
   showSnackbar(message: string, action?: string, duration?: number) {
     this.snackbar.open(message, action, duration ? { duration } : null)
   }

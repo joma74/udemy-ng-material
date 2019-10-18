@@ -28,12 +28,12 @@
           type="submit"
           mat-raised-button
           color="primary"
-          [disabled]="f.invalid || isLoading"
+          [disabled]="f.invalid || (isLoading$ | async)"
         >
           Start
           <div
             class="position-center position-absolute"
-            [class.hide]="!isLoading"
+            [class.hide]="(isLoading$ | async) === false"
           >
             <div class="spinner"></div>
           </div></button></mat-card-actions

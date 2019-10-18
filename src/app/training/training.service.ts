@@ -1,7 +1,10 @@
 import { Injectable } from "@angular/core"
 import { AngularFirestore } from "@angular/fire/firestore"
+import { Store } from "@ngrx/store"
 import { Subject, Subscription } from "rxjs"
 import { map } from "rxjs/operators"
+import * as fromApp from "../app.reducer"
+import * as UI from "../shared/ui.actions"
 import { UIService } from "../shared/ui.service"
 import { Exercise } from "./exercise.model"
 
@@ -15,14 +18,18 @@ export class TrainingService {
 
   private firebaseSubs: Subscription[] = []
 
-  constructor(private db: AngularFirestore, private uiService: UIService) {}
+  constructor(
+    private db: AngularFirestore,
+    private uiService: UIService,
+    private store: Store<fromApp.State>,
+  ) {}
 
   exerciseChangedSub = new Subject<Exercise>()
   availableExercisesChangedSub = new Subject<Exercise[]>()
   pastExercisesChangedSub = new Subject<Exercise[]>()
 
   fetchAvailableExercises() {
-    this.uiService.loadingStateChanged.next(true)
+    this.store.dispatch(new UI.StartLoading())
     this.firebaseSubs.push(
       this.db
         .collection(AVAIL_EXERS_COLLNAME)
@@ -42,10 +49,10 @@ export class TrainingService {
           next: (availableExercises: Exercise[]) => {
             this.availableExercises = availableExercises
             this.availableExercisesChangedSub.next([...availableExercises])
-            this.uiService.loadingStateChanged.next(false)
+            this.store.dispatch(new UI.StopLoading())
           },
           error: (error) => {
-            this.uiService.loadingStateChanged.next(false)
+            this.store.dispatch(new UI.StopLoading())
             this.uiService.showSnackbar(error.message)
           },
         }),
@@ -89,7 +96,7 @@ export class TrainingService {
   }
 
   fetchPastExercises() {
-    this.uiService.loadingStateChanged.next(true)
+    this.store.dispatch(new UI.StartLoading())
     this.firebaseSubs.push(
       this.db
         .collection(PAST_EXERS_COLLNAME, (ref) => ref.orderBy("date", "desc"))
@@ -97,10 +104,10 @@ export class TrainingService {
         .subscribe({
           next: (pastExercises: Exercise[]) => {
             this.pastExercisesChangedSub.next([...pastExercises])
-            this.uiService.loadingStateChanged.next(false)
+            this.store.dispatch(new UI.StopLoading())
           },
           error: (error) => {
-            this.uiService.loadingStateChanged.next(false)
+            this.store.dispatch(new UI.StopLoading())
             this.uiService.showSnackbar(error.message)
           },
         }),
