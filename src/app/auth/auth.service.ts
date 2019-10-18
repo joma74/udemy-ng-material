@@ -2,18 +2,15 @@ import { Injectable } from "@angular/core"
 import { AngularFireAuth } from "@angular/fire/auth"
 import { Router } from "@angular/router"
 import { Store } from "@ngrx/store"
-import { Subject } from "rxjs"
 import * as fromApp from "../app.reducer"
-import * as UI from "../shared/ui.actions"
+import * as UI from "../shared/ui.action"
 import { UIService } from "../shared/ui.service"
 import { TrainingService } from "../training/training.service"
 import { AuthData } from "./auth-data.mode"
+import * as AUTH from "./auth.action"
 
 @Injectable()
 export class AuthService {
-  authChange = new Subject<boolean>()
-  private isAuthenticated = false
-
   constructor(
     private router: Router,
     private afAuth: AngularFireAuth,
@@ -25,13 +22,11 @@ export class AuthService {
   initAuthListener() {
     this.afAuth.authState.subscribe((user) => {
       if (user) {
-        this.isAuthenticated = true
-        this.authChange.next(true)
+        this.store.dispatch(new AUTH.SetAuthenticated())
         this.router.navigate(["/training"])
       } else {
         this.trainingService.cancelSubscriptions()
-        this.isAuthenticated = false
-        this.authChange.next(false)
+        this.store.dispatch(new AUTH.SetUnauthenticated())
         this.router.navigate(["/login"])
       }
     })
@@ -43,10 +38,11 @@ export class AuthService {
       .createUserWithEmailAndPassword(authData.email, authData.password)
       .then((result) => {
         this.store.dispatch(new UI.StopLoading())
-        // NOP
+        this.store.dispatch(new AUTH.SetAuthenticated())
       })
       .catch((error) => {
         this.store.dispatch(new UI.StopLoading())
+        this.store.dispatch(new AUTH.SetUnauthenticated())
         this.uiService.showSnackbar(error.message)
       })
   }
@@ -57,19 +53,17 @@ export class AuthService {
       .signInWithEmailAndPassword(authData.email, authData.password)
       .then((result) => {
         this.store.dispatch(new UI.StopLoading())
-        // NOP
+        this.store.dispatch(new AUTH.SetAuthenticated())
       })
       .catch((error) => {
         this.store.dispatch(new UI.StopLoading())
+        this.store.dispatch(new AUTH.SetUnauthenticated())
         this.uiService.showSnackbar(error.message)
       })
   }
 
   logout() {
     this.afAuth.auth.signOut()
-  }
-
-  isAuth() {
-    return this.isAuthenticated
+    this.store.dispatch(new AUTH.SetUnauthenticated())
   }
 }

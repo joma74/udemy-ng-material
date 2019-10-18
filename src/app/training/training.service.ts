@@ -4,7 +4,7 @@ import { Store } from "@ngrx/store"
 import { Subject, Subscription } from "rxjs"
 import { map } from "rxjs/operators"
 import * as fromApp from "../app.reducer"
-import * as UI from "../shared/ui.actions"
+import * as UI from "../shared/ui.action"
 import { UIService } from "../shared/ui.service"
 import { Exercise } from "./exercise.model"
 

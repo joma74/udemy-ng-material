@@ -5,8 +5,10 @@ import {
   OnInit,
   Output,
 } from "@angular/core"
+import { Store } from "@ngrx/store"
 import { AutoUnsubscribe } from "ngx-auto-unsubscribe"
-import { Subscription } from "rxjs"
+import { Observable, Subscription } from "rxjs"
+import * as fromApp from "../../app.reducer"
 import { AuthService } from "../../auth/auth.service"
 
 @AutoUnsubscribe()
@@ -16,17 +18,17 @@ import { AuthService } from "../../auth/auth.service"
   styleUrls: ["./header.component.css"],
 })
 export class HeaderComponent implements OnInit, OnDestroy {
-  isAuth: boolean
-  authSub: Subscription
+  isAuth$: Observable<boolean>
   @Output()
   sidenavToggle = new EventEmitter<void>()
 
-  constructor(private authService: AuthService) {}
+  constructor(
+    private store: Store<fromApp.State>,
+    private authService: AuthService,
+  ) {}
 
   ngOnInit() {
-    this.authSub = this.authService.authChange.subscribe((authStatus) => {
-      this.isAuth = authStatus
-    })
+    this.isAuth$ = this.store.select(fromApp.getIsAuthenticated)
   }
 
   // This method must be present, even if empty.

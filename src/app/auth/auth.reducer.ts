@@ -1,26 +1,26 @@
-import { LoadingAction, UIACTION } from "./ui.action"
+import { AUTHACTION, AuthAction } from "./auth.action"
 
 export interface State {
-  isLoading: boolean
+  isAuthenticated: boolean
 }
 
 const INITIALSTATE: State = {
-  isLoading: false,
+  isAuthenticated: false,
 }
 //
 
-export function uiReducer(
+export function authReducer(
   state: State = INITIALSTATE,
-  action: LoadingAction,
+  action: AuthAction,
 ): State {
   switch (action.type) {
-    case UIACTION.START_LOADING:
+    case AUTHACTION.SET_AUTHENTICATED:
       return {
-        isLoading: true,
+        isAuthenticated: true,
       }
-    case UIACTION.STOP_LOADING:
+    case AUTHACTION.SET_UNAUTHENTICATED:
       return {
-        isLoading: false,
+        isAuthenticated: false,
       }
     default:
       return state
@@ -28,7 +28,7 @@ export function uiReducer(
   // return assertUnreachable(action)
 }
 
-export const getIsLoading = (state: State) => state.isLoading
+export const getIsAuthenticated = (state: State) => state.isAuthenticated
 
 /**
  * Indicates at TS compile time you forgot to include cases in your exhaustive switch. At runtime ...?

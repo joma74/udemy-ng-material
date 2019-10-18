@@ -15,4 +15,4 @@ export class StopLoading implements Action {
   readonly type = UIACTION.STOP_LOADING
 }
 
-export type LoadingActions = StartLoading | StopLoading
+export type LoadingAction = StartLoading | StopLoading
