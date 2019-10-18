@@ -21,14 +21,14 @@ export class NewTrainingComponent implements OnInit, OnDestroy {
   isLoading: boolean
   availableExcercises: Exercise[]
 
-  loadingStateChangedSubscription: Subscription
-  availableExercisesChangedSubscription: Subscription
+  loadingStateChangedSub: Subscription
+  availableExercisesChangedSub: Subscription
 
   ngOnInit() {
-    this.loadingStateChangedSubscription = this.uiService.loadingStateChanged.subscribe(
+    this.loadingStateChangedSub = this.uiService.loadingStateChanged.subscribe(
       (loadingState) => (this.isLoading = loadingState),
     )
-    this.availableExercisesChangedSubscription = this.trainingService.availableExercisesChangedSubscription.subscribe(
+    this.availableExercisesChangedSub = this.trainingService.availableExercisesChangedSub.subscribe(
       (availableExcercises) => {
         this.availableExcercises = availableExcercises
       },

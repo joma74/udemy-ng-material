@@ -11,11 +11,11 @@ import { TrainingService } from "./training.service"
 })
 export class TrainingComponent implements OnInit, OnDestroy {
   ongoingTraining = false
-  exerciseChangedSubscription: Subscription
+  exerciseChangedSub: Subscription
   constructor(private trainingService: TrainingService) {}
 
   ngOnInit() {
-    this.exerciseChangedSubscription = this.trainingService.exerciseChangedSubscription.subscribe(
+    this.exerciseChangedSub = this.trainingService.exerciseChangedSub.subscribe(
       (exChanged) => {
         exChanged
           ? (this.ongoingTraining = true)

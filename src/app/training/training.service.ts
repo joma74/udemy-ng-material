@@ -17,9 +17,9 @@ export class TrainingService {
 
   constructor(private db: AngularFirestore, private uiService: UIService) {}
 
-  exerciseChangedSubscription = new Subject<Exercise>()
-  availableExercisesChangedSubscription = new Subject<Exercise[]>()
-  pastExercisesChangedSubscription = new Subject<Exercise[]>()
+  exerciseChangedSub = new Subject<Exercise>()
+  availableExercisesChangedSub = new Subject<Exercise[]>()
+  pastExercisesChangedSub = new Subject<Exercise[]>()
 
   fetchAvailableExercises() {
     this.uiService.loadingStateChanged.next(true)
@@ -41,9 +41,7 @@ export class TrainingService {
         .subscribe({
           next: (availableExercises: Exercise[]) => {
             this.availableExercises = availableExercises
-            this.availableExercisesChangedSubscription.next([
-              ...availableExercises,
-            ])
+            this.availableExercisesChangedSub.next([...availableExercises])
             this.uiService.loadingStateChanged.next(false)
           },
           error: (error) => {
@@ -58,7 +56,7 @@ export class TrainingService {
     this.runningExercise = this.availableExercises.find(
       (ex) => selectedExerciseId === ex.id,
     )
-    this.exerciseChangedSubscription.next({ ...this.runningExercise })
+    this.exerciseChangedSub.next({ ...this.runningExercise })
   }
 
   onCompleteExercise() {
@@ -70,7 +68,7 @@ export class TrainingService {
       state: "COMPLETED",
     })
     this.runningExercise = null
-    this.exerciseChangedSubscription.next(null)
+    this.exerciseChangedSub.next(null)
   }
 
   onCancelExercise(progress: number) {
@@ -82,7 +80,7 @@ export class TrainingService {
       state: "CANCELED",
     })
     this.runningExercise = null
-    this.exerciseChangedSubscription.next(null)
+    this.exerciseChangedSub.next(null)
   }
 
   getCurrentExercise() {
@@ -98,7 +96,7 @@ export class TrainingService {
         .valueChanges()
         .subscribe({
           next: (pastExercises: Exercise[]) => {
-            this.pastExercisesChangedSubscription.next([...pastExercises])
+            this.pastExercisesChangedSub.next([...pastExercises])
             this.uiService.loadingStateChanged.next(false)
           },
           error: (error) => {

@@ -40,7 +40,7 @@ export class PastTrainingsComponent
     keyOf<Exercise>("state"),
   ]
 
-  pastExercisesChangedSubscription: Subscription
+  pastExercisesChangedSub: Subscription
 
   @ViewChild(MatSort, { static: true })
   sort: MatSort
@@ -51,7 +51,7 @@ export class PastTrainingsComponent
   dataSource = new MatTableDataSource<Exercise>()
 
   ngOnInit() {
-    this.pastExercisesChangedSubscription = this.trainingService.pastExercisesChangedSubscription.subscribe(
+    this.pastExercisesChangedSub = this.trainingService.pastExercisesChangedSub.subscribe(
       (pastExercises) => {
         this.dataSource.data = pastExercises
       },

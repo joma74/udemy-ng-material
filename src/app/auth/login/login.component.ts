@@ -17,10 +17,10 @@ export class LoginComponent implements OnInit, OnDestroy {
   loginForm: FormGroup
   isLoading: boolean
 
-  loadingStateChangedSubscription: Subscription
+  loadingStateChangedSub: Subscription
 
   ngOnInit() {
-    this.loadingStateChangedSubscription = this.uiService.loadingStateChanged.subscribe(
+    this.loadingStateChangedSub = this.uiService.loadingStateChanged.subscribe(
       (loadingState) => (this.isLoading = loadingState),
     )
     //

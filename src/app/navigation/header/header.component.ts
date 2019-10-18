@@ -17,18 +17,16 @@ import { AuthService } from "../../auth/auth.service"
 })
 export class HeaderComponent implements OnInit, OnDestroy {
   isAuth: boolean
-  authSubscription: Subscription
+  authSub: Subscription
   @Output()
   sidenavToggle = new EventEmitter<void>()
 
   constructor(private authService: AuthService) {}
 
   ngOnInit() {
-    this.authSubscription = this.authService.authChange.subscribe(
-      (authStatus) => {
-        this.isAuth = authStatus
-      },
-    )
+    this.authSub = this.authService.authChange.subscribe((authStatus) => {
+      this.isAuth = authStatus
+    })
   }
 
   // This method must be present, even if empty.
