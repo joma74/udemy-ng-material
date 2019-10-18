@@ -58,10 +58,13 @@
       type="submit"
       mat-raised-button
       color="primary"
-      [disabled]="f.invalid || isLoading"
+      [disabled]="f.invalid || (isLoading$ | async)"
     >
       Submit
-      <div class="position-center position-absolute" [class.hide]="!isLoading">
+      <div
+        class="position-center position-absolute"
+        [class.hide]="(isLoading$ | async) === false"
+      >
         <div class="spinner"></div>
       </div>
     </button>
