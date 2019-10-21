@@ -7,7 +7,7 @@ import {
 import * as fromAuth from "./auth/auth.reducer"
 import * as fromUi from "./shared/ui.reducer"
 
-const enum SUBFEATURE {
+export const enum SUBFEATURE {
   UI = "ui",
   AUTH = "auth",
 }
