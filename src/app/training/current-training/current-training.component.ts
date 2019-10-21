@@ -40,9 +40,6 @@ export class CurrentTrainingComponent implements OnInit, OnDestroy {
    */
   ngOnInit() {
     this.startOrResumeTimer()
-    const isExerciseRunning$: Observable<boolean> = this.store.select(
-      fromTraining.isExerciseRunning,
-    )
     this.store
       .select(fromTraining.getRunningExercise)
       .pipe(
@@ -51,7 +48,7 @@ export class CurrentTrainingComponent implements OnInit, OnDestroy {
         // or the exercise is not running, which may occur between ngIf in parent comp html
         takeWhile(() => {
           let result = false
-          isExerciseRunning$.subscribe({
+          this.store.select(fromTraining.isExerciseRunning).subscribe({
             next: (current) => {
               result = current
             },
