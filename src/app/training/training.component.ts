@@ -1,7 +1,8 @@
 import { Component, OnDestroy, OnInit } from "@angular/core"
+import { Store } from "@ngrx/store"
 import { AutoUnsubscribe } from "ngx-auto-unsubscribe"
-import { Subscription } from "rxjs"
-import { TrainingService } from "./training.service"
+import { Observable } from "rxjs"
+import * as fromTraining from "./training.reducer"
 
 @AutoUnsubscribe()
 @Component({
@@ -10,18 +11,11 @@ import { TrainingService } from "./training.service"
   styleUrls: ["./training.component.css"],
 })
 export class TrainingComponent implements OnInit, OnDestroy {
-  ongoingTraining = false
-  exerciseChangedSub: Subscription
-  constructor(private trainingService: TrainingService) {}
+  ongoingTraining$: Observable<boolean>
+  constructor(private store: Store<fromTraining.State>) {}
 
   ngOnInit() {
-    this.exerciseChangedSub = this.trainingService.exerciseChangedSub.subscribe(
-      (exChanged) => {
-        exChanged
-          ? (this.ongoingTraining = true)
-          : (this.ongoingTraining = false)
-      },
-    )
+    this.ongoingTraining$ = this.store.select(fromTraining.isExerciseRunning)
   }
 
   // This method must be present, even if empty.

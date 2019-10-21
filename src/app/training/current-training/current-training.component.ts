@@ -1,20 +1,38 @@
-import { Component, OnInit } from "@angular/core"
+import { Component, OnDestroy, OnInit } from "@angular/core"
 import { MatDialog } from "@angular/material"
+import { Store } from "@ngrx/store"
+import { AutoUnsubscribe } from "ngx-auto-unsubscribe"
+import { Observable, Subject } from "rxjs"
+import {
+  merge,
+  mergeMap,
+  take,
+  takeUntil,
+  takeWhile,
+  tap,
+} from "rxjs/operators"
+import * as TRAINING from "../training.action"
+import * as fromTraining from "../training.reducer"
 import { TrainingService } from "../training.service"
 import { StopTrainingComponent } from "./stop-training.component"
 
+@AutoUnsubscribe()
 @Component({
   selector: "app-current-training",
   templateUrl: "./current-training.component.html",
   styleUrls: ["./current-training.component.css"],
 })
-export class CurrentTrainingComponent implements OnInit {
+export class CurrentTrainingComponent implements OnInit, OnDestroy {
   progress = 0
   private timer: NodeJS.Timer
+  public displayTrainingPlan: string
+  // see https://medium.com/@stodge/ngrx-common-gotchas-8f59f541e47c
+  private ngUnsubscribe: Subject<void> = new Subject<void>()
 
   constructor(
     private dialog: MatDialog,
     private trainingService: TrainingService,
+    private store: Store<fromTraining.State>,
   ) {}
 
   /**
@@ -22,24 +40,57 @@ export class CurrentTrainingComponent implements OnInit {
    */
   ngOnInit() {
     this.startOrResumeTimer()
+    const isExerciseRunning$: Observable<boolean> = this.store.select(
+      fromTraining.isExerciseRunning,
+    )
+    this.store
+      .select(fromTraining.getRunningExercise)
+      .pipe(
+        // until the component issues a unsubscribe itself
+        takeUntil(this.ngUnsubscribe),
+        // or the exercise is not running, which may occur between ngIf in parent comp html
+        takeWhile(() => {
+          let result = false
+          isExerciseRunning$.subscribe({
+            next: (current) => {
+              result = current
+            },
+          })
+          return result
+        }),
+      )
+      .subscribe({
+        next: (runningExercise) => {
+          this.displayTrainingPlan = `Do ${runningExercise.name} for ${runningExercise.duration} seconds`
+        },
+      })
   }
 
-  displayTrainingPlan() {
-    const ex = this.trainingService.getCurrentExercise()
-    return `Do ${ex.name} for ${ex.duration} seconds`
+  ngOnDestroy(): void {
+    this.ngUnsubscribe.next()
+    this.ngUnsubscribe.complete()
   }
 
   startOrResumeTimer() {
-    const step =
-      (this.trainingService.getCurrentExercise().duration / 100) * 1000
-    this.timer = setInterval(() => {
-      if (this.progress < 100) {
-        this.progress = this.progress + 1
-      } else {
-        this.trainingService.onCompleteExercise()
-        clearInterval(this.timer)
-      }
-    }, step)
+    this.store
+      .select(fromTraining.getRunningExercise)
+      .pipe(take(1))
+      .subscribe({
+        next: (runningExercise) => {
+          const step = (runningExercise.duration / 100) * 1000
+          this.timer = setInterval(() => {
+            if (this.progress < 100) {
+              this.progress = this.progress + 1
+            } else {
+              this.trainingService.onCompleteExercise()
+              clearInterval(this.timer)
+            }
+          }, step)
+        },
+        error: (error) => {
+          this.trainingService.onErrorExercise(error)
+        },
+      })
   }
 
   onStop() {

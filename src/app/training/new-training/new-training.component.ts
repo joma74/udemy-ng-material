@@ -2,9 +2,10 @@ import { Component, OnDestroy, OnInit } from "@angular/core"
 import { NgForm } from "@angular/forms"
 import { Store } from "@ngrx/store"
 import { AutoUnsubscribe } from "ngx-auto-unsubscribe"
-import { Observable, Subscription } from "rxjs"
+import { Observable } from "rxjs"
 import * as fromApp from "../../app.reducer"
 import { Exercise } from "../exercise.model"
+import * as fromTraining from "../training.reducer"
 import { TrainingService } from "../training.service"
 
 @AutoUnsubscribe()
@@ -16,20 +17,16 @@ import { TrainingService } from "../training.service"
 export class NewTrainingComponent implements OnInit, OnDestroy {
   constructor(
     private trainingService: TrainingService,
-    private store: Store<fromApp.State>,
+    private store: Store<fromTraining.State>,
   ) {}
 
   isLoading$: Observable<boolean>
-  availableExcercises: Exercise[]
-
-  availableExercisesChangedSub: Subscription
+  availableExcercises$: Observable<Exercise[]>
 
   ngOnInit() {
     this.isLoading$ = this.store.select(fromApp.getIsLoading)
-    this.availableExercisesChangedSub = this.trainingService.availableExercisesChangedSub.subscribe(
-      (availableExcercises) => {
-        this.availableExcercises = availableExcercises
-      },
+    this.availableExcercises$ = this.store.select(
+      fromTraining.getAvailableExercises,
     )
     //
     this.trainingService.fetchAvailableExercises()

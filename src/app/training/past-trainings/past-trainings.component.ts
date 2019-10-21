@@ -6,9 +6,10 @@ import {
   ViewChild,
 } from "@angular/core"
 import { MatPaginator, MatSort, MatTableDataSource } from "@angular/material"
+import { Store } from "@ngrx/store"
 import { AutoUnsubscribe } from "ngx-auto-unsubscribe"
-import { Subscription } from "rxjs"
 import { Exercise } from "../exercise.model"
+import * as fromTraining from "../training.reducer"
 import { TrainingService } from "../training.service"
 
 @AutoUnsubscribe()
@@ -19,7 +20,10 @@ import { TrainingService } from "../training.service"
 })
 export class PastTrainingsComponent
   implements OnInit, OnDestroy, AfterViewInit {
-  constructor(private trainingService: TrainingService) {}
+  constructor(
+    private trainingService: TrainingService,
+    private store: Store<fromTraining.State>,
+  ) {}
   COLUMNHEADERNAME: string[] = [
     "Name",
     "Duration[s]",
@@ -40,8 +44,6 @@ export class PastTrainingsComponent
     keyOf<Exercise>("state"),
   ]
 
-  pastExercisesChangedSub: Subscription
-
   @ViewChild(MatSort, { static: true })
   sort: MatSort
 
@@ -51,11 +53,11 @@ export class PastTrainingsComponent
   dataSource = new MatTableDataSource<Exercise>()
 
   ngOnInit() {
-    this.pastExercisesChangedSub = this.trainingService.pastExercisesChangedSub.subscribe(
-      (pastExercises) => {
+    this.store.select(fromTraining.getPastExercises).subscribe({
+      next: (pastExercises) => {
         this.dataSource.data = pastExercises
       },
-    )
+    })
     this.trainingService.fetchPastExercises()
   }
 

@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from "@angular/core"
 import { FormControl, FormGroup, Validators } from "@angular/forms"
 import { Store } from "@ngrx/store"
 import { AutoUnsubscribe } from "ngx-auto-unsubscribe"
-import { Observable, Subscription } from "rxjs"
+import { Observable } from "rxjs"
 import * as fromApp from "../../app.reducer"
 import { AuthService } from "../auth.service"
 
