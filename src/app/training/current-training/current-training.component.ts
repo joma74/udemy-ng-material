@@ -2,16 +2,8 @@ import { Component, OnDestroy, OnInit } from "@angular/core"
 import { MatDialog } from "@angular/material"
 import { Store } from "@ngrx/store"
 import { AutoUnsubscribe } from "ngx-auto-unsubscribe"
-import { Observable, Subject } from "rxjs"
-import {
-  merge,
-  mergeMap,
-  take,
-  takeUntil,
-  takeWhile,
-  tap,
-} from "rxjs/operators"
-import * as TRAINING from "../training.action"
+import { Subject } from "rxjs"
+import { take, takeUntil, takeWhile } from "rxjs/operators"
 import * as fromTraining from "../training.reducer"
 import { TrainingService } from "../training.service"
 import { StopTrainingComponent } from "./stop-training.component"

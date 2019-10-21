@@ -7,7 +7,7 @@ import {
 } from "@angular/core"
 import { Store } from "@ngrx/store"
 import { AutoUnsubscribe } from "ngx-auto-unsubscribe"
-import { Observable, Subscription } from "rxjs"
+import { Observable } from "rxjs"
 import * as fromApp from "../../app.reducer"
 import { AuthService } from "../../auth/auth.service"
 

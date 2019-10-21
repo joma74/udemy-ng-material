@@ -4,7 +4,6 @@ import {
   CanActivate,
   CanLoad,
   Route,
-  Router,
   RouterStateSnapshot,
 } from "@angular/router"
 import { Store } from "@ngrx/store"
@@ -13,7 +12,7 @@ import * as fromApp from "../app.reducer"
 
 @Injectable()
 export class AuthGuard implements CanActivate, CanLoad {
-  constructor(private store: Store<fromApp.State>, private router: Router) {}
+  constructor(private store: Store<fromApp.State>) {}
 
   canLoad(route: Route) {
     // only take the first result `.pipe(take(1))`, else error
