@@ -14,7 +14,7 @@
     "bundlesize-check": "bundlesize",
     "tsc-validate-watch": "yarn tsc-validate-once --watch",
     "tsc-validate-once": "node_modules/typescript/bin/tsc --project ./tsconfig.json --noEmit true",
-    "firebase-admin": "node admin/firebase.js",
+    "firebaser": "node admin/firebaser",
     "ng": "ng",
     "serve": "ng serve",
     "serve-dev": "ng serve --liveReload=true --configuration hmr",
