@@ -1,6 +1,8 @@
-process.env.DEBUG = "*"
-
-const LOG = require("debug")("firebase-admin")
+const MASTERLOG = require("debug")
+// tslint:disable-next-line: no-console
+MASTERLOG.log = console.info.bind(console) // set all output to go via console.info
+MASTERLOG.enable("firebase-admin")
+const LOG = MASTERLOG("firebase-admin")
 const FIRESTORELOG = require("debug")("firestore")
 
 const tunnel = require("tunnel2")
@@ -30,9 +32,9 @@ const util = require("util")
 const serviceAccount = require("/media/accountkeys/ng-fitness-tracker-AccountKey.json")
 
 let defaultApp = admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount, agent),
+  credential: admin.credential.cert(serviceAccount),
   databaseURL: "https://ng-fitness-tracker-49d1f.firebaseio.com",
-  httpAgent: agent,
+  //   httpAgent: agent,
 })
 
 // LOG(defaultApp.name)
@@ -44,32 +46,24 @@ let defaultApp = admin.initializeApp({
 // LOG(defaultDatabase)
 //
 const firestoreDb = admin.firestore()
-firestoreDb.settings({
-  clientConfig: {
-    interfaces: {
-      "google.firestore.v1.Firestore": {
-        methods: {
-          RunQuery: {
-            timeout_millis: 500,
-          },
-        },
-      },
-    },
-  },
-})
-
-LOG(`After firestore ${util.inspect(firestoreDb)}`)
 
 /**
  *
  * @param {FirebaseFirestore.Firestore} db
  */
 let execute = async (db) => {
-  const refs = db.collection("availableExercisesS")
+  const refs = db.collection("availableExercises")
 
-  const doc = await refs.doc("5lWnIBIggSPbm86wq9Qb").get()
-
-  LOG(doc.id, " => ", doc.data())
+  await refs
+    .doc("5lWnIBIggSPbm86wq9Qb")
+    .get()
+    .then((doc) => {
+      LOG(doc.id, " => ", doc.data())
+    })
+    .catch((err) => {
+      // Error fetching documents
+      LOG("Error", err)
+    })
 
   await refs
     .get()
