@@ -3,15 +3,22 @@ process.env.DEBUG = "*"
 const LOG = require("debug")("firebase-admin")
 const FIRESTORELOG = require("debug")("firestore")
 
-const HttpsProxyAgent = require("https-proxy-agent")
+const tunnel = require("tunnel2")
+const agent = tunnel.httpsOverHttp({
+  proxy: {
+    host: "IXIDIXI",
+    port: 1234,
+  },
+})
+
 const admin = require("firebase-admin")
 admin.database.enableLogging(true)
 admin.firestore.setLogFunction((msg) => FIRESTORELOG(msg))
 
 const util = require("util")
 // LOGGING
-process.env.GPRC_TRACE = "all"
-process.env.GPRC_VERBOSITY = "DEBUG"
+// process.env.GPRC_TRACE = "all"
+// process.env.GPRC_VERBOSITY = "DEBUG"
 // OTHERS
 // process.env.GOOGLE_APPLICATION_CREDENTIALS = "/media/accountkeys/ng-fitness-tracker-AccountKey.json"
 // process.env.GCLOUD_PROJECT = "ng-fitness-tracker-49d1f"
@@ -22,30 +29,48 @@ process.env.GPRC_VERBOSITY = "DEBUG"
 // @ts-ignore
 const serviceAccount = require("/media/accountkeys/ng-fitness-tracker-AccountKey.json")
 
-/**
- * See https://medium.com/faun/firebase-accessing-firestore-and-firebase-through-a-proxy-server-c6c6029cddb1
- */
-// const agent = new HttpsProxyAgent("IXIDIXI")
-
 let defaultApp = admin.initializeApp({
-  // credential: firebase.credential.applicationDefault(),
-  credential: admin.credential.cert(serviceAccount),
+  credential: admin.credential.cert(serviceAccount, agent),
   databaseURL: "https://ng-fitness-tracker-49d1f.firebaseio.com",
-  // httpAgent: agent,
+  httpAgent: agent,
 })
+
+// LOG(defaultApp.name)
+
+// // Retrieve services via the defaultApp variable...
+// var defaultAuth = admin.auth()
+// LOG(defaultAuth)
+// var defaultDatabase = admin.database()
+// LOG(defaultDatabase)
 //
 const firestoreDb = admin.firestore()
+firestoreDb.settings({
+  clientConfig: {
+    interfaces: {
+      "google.firestore.v1.Firestore": {
+        methods: {
+          RunQuery: {
+            timeout_millis: 500,
+          },
+        },
+      },
+    },
+  },
+})
+
+LOG(`After firestore ${util.inspect(firestoreDb)}`)
 
 /**
  *
  * @param {FirebaseFirestore.Firestore} db
  */
 let execute = async (db) => {
-  LOG(`After firestore`)
+  const refs = db.collection("availableExercisesS")
 
-  const refs = db.collection("availableExercises")
+  const doc = await refs.doc("5lWnIBIggSPbm86wq9Qb").get()
 
-  LOG(`After collection`)
+  LOG(doc.id, " => ", doc.data())
+
   await refs
     .get()
     .then((documentSet) => {
