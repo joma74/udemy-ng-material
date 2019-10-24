@@ -1,4 +1,5 @@
 import { Injectable } from "@angular/core"
+import { AngularFireAuth } from "@angular/fire/auth"
 import { AngularFirestore } from "@angular/fire/firestore"
 import { Store } from "@ngrx/store"
 import { Subscription } from "rxjs"
@@ -18,9 +19,15 @@ export class TrainingService {
 
   constructor(
     private db: AngularFirestore,
+    private afAuth: AngularFireAuth,
     private uiService: UIService,
     private store: Store<fromTraining.State>,
   ) {}
+
+  private getPathToOwnedPastExers() {
+    const uid = this.afAuth.auth.currentUser.uid
+    return `${uid}\\${PAST_EXERS_COLLNAME}`
+  }
 
   fetchAvailableExercises() {
     this.store.dispatch(new UI.StartLoading())
@@ -109,9 +116,10 @@ export class TrainingService {
 
   fetchPastExercises() {
     this.store.dispatch(new UI.StartLoading())
+    const pathToOwnedExercises = this.getPathToOwnedPastExers()
     this.firebaseSubs.push(
       this.db
-        .collection(PAST_EXERS_COLLNAME, (ref) => ref.orderBy("date", "desc"))
+        .collection(pathToOwnedExercises, (ref) => ref.orderBy("date", "desc"))
         .valueChanges()
         .subscribe({
           next: (pastExercises: Exercise[]) => {
@@ -127,7 +135,8 @@ export class TrainingService {
   }
 
   private persistAsPastExercise(exercise: Exercise) {
-    this.db.collection(PAST_EXERS_COLLNAME).add(exercise)
+    const pathToOwnedExercises = this.getPathToOwnedPastExers()
+    this.db.collection(pathToOwnedExercises).add(exercise)
     return exercise
   }
 

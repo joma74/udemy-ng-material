@@ -1,0 +1,17 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // deny all
+    match /{document=**} {
+        allow read, write: if false;
+    }
+    // read only
+    match /availableExercises {
+      allow read: if request.auth.uid != null;
+    }
+    // read and create if owned
+    match /pastExercises/{uid} {
+      allow read, create: if request.auth.uid === uid;
+    }
+  }
+}

@@ -24,7 +24,13 @@
     "strictInjectionParameters": true
   },
   "exclude": ["config/profiles/**"],
-  "include": ["config/**/*", "e2e/**/*", "src/**/*", "karma.conf.js"],
+  "include": [
+    "config/**/*",
+    "e2e/**/*",
+    "src/**/*",
+    "admin/**/*",
+    "karma.conf.js"
+  ],
   "typeAcquisition": {
     "enable": false
   }
