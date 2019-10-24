@@ -18,12 +18,11 @@
     "ng": "ng",
     "serve": "ng serve",
     "serve-dev": "ng serve --liveReload=true --configuration hmr",
-    "build": "ng build --prod ",
+    "build": "ng build --prod --stats-json",
     "test-once": "yarn test-watch --watch=false",
     "test-watch": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "build-prod": "ng build --prod --stats-json",
     "ci": "run-s -l clean-target _lint _prettier tsc-validate-once",
     "postinstall": "make-dir dist target"
   },
