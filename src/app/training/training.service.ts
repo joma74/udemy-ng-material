@@ -11,7 +11,8 @@ import * as TRAINING from "./training.action"
 import * as fromTraining from "./training.reducer"
 
 const AVAIL_EXERS_COLLNAME = "availableExercises"
-const PAST_EXERS_COLLNAME = "pastExercises"
+const EXERS_DOCNAME = "exercises"
+const PAST_COLLNAME = "past"
 
 @Injectable()
 export class TrainingService {
@@ -24,9 +25,13 @@ export class TrainingService {
     private store: Store<fromTraining.State>,
   ) {}
 
-  private getPathToOwnedPastExers() {
-    const uid = this.afAuth.auth.currentUser.uid
-    return `${uid}\\${PAST_EXERS_COLLNAME}`
+  private getOwnedBy() {
+    return this.afAuth.auth.currentUser.uid
+  }
+
+  private getOwnedByExersPast_P() {
+    const uid = this.getOwnedBy()
+    return `${uid}/${EXERS_DOCNAME}/${PAST_COLLNAME}`
   }
 
   fetchAvailableExercises() {
@@ -54,8 +59,7 @@ export class TrainingService {
             this.store.dispatch(new UI.StopLoading())
           },
           error: (error) => {
-            this.store.dispatch(new UI.StopLoading())
-            this.uiService.showSnackbar(error.message)
+            this.onErrorExercise(error)
           },
         }),
     )
@@ -81,8 +85,7 @@ export class TrainingService {
           })
         },
         error: (error) => {
-          this.store.dispatch(new TRAINING.UnsetRunningExercise())
-          this.uiService.showSnackbar(error.message)
+          this.onErrorExercise(error)
         },
       })
   }
@@ -103,41 +106,60 @@ export class TrainingService {
           })
         },
         error: (error) => {
-          this.store.dispatch(new TRAINING.UnsetRunningExercise())
-          this.uiService.showSnackbar(error.message)
+          this.onErrorExercise(error)
         },
       })
   }
 
   onErrorExercise(error: Error) {
+    this.store.dispatch(new UI.StopLoading())
     this.store.dispatch(new TRAINING.UnsetRunningExercise())
     this.uiService.showSnackbar(error.message)
   }
 
   fetchPastExercises() {
     this.store.dispatch(new UI.StartLoading())
-    const pathToOwnedExercises = this.getPathToOwnedPastExers()
-    this.firebaseSubs.push(
-      this.db
-        .collection(pathToOwnedExercises, (ref) => ref.orderBy("date", "desc"))
-        .valueChanges()
-        .subscribe({
-          next: (pastExercises: Exercise[]) => {
-            this.store.dispatch(new TRAINING.SetPastExercises(pastExercises))
-            this.store.dispatch(new UI.StopLoading())
-          },
-          error: (error) => {
-            this.store.dispatch(new UI.StopLoading())
-            this.uiService.showSnackbar(error.message)
-          },
-        }),
-    )
+    try {
+      this.firebaseSubs.push(
+        this.db
+          .collection(this.getOwnedByExersPast_P(), (ref) =>
+            ref.orderBy("date", "desc"),
+          )
+          .valueChanges()
+          .subscribe({
+            next: (pastExercises: Exercise[]) => {
+              this.store.dispatch(new TRAINING.SetPastExercises(pastExercises))
+              this.store.dispatch(new UI.StopLoading())
+            },
+            error: (error) => {
+              this.onErrorExercise(error)
+            },
+          }),
+      )
+    } catch (error) {
+      this.onErrorExercise(error)
+    }
   }
 
   private persistAsPastExercise(exercise: Exercise) {
-    const pathToOwnedExercises = this.getPathToOwnedPastExers()
-    this.db.collection(pathToOwnedExercises).add(exercise)
-    return exercise
+    try {
+      this.db
+        .collection(this.getOwnedByExersPast_P())
+        .add(exercise)
+        .then(
+          (doc) => {
+            /* NOP */
+          },
+          (reason) => {
+            this.onErrorExercise(reason)
+          },
+        )
+        .catch((error) => {
+          this.onErrorExercise(error)
+        })
+    } catch (error) {
+      this.onErrorExercise(error)
+    }
   }
 
   cancelSubscriptions() {
