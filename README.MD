@@ -8,3 +8,7 @@ See
 
 - https://github.com/angular/angular-cli/blob/master/docs/documentation/stories/configure-hmr.md
 - https://github.com/PatrickJS/angular-hmr
+
+## Deploy
+
+firebase deploy --only hosting

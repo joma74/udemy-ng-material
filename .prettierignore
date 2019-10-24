@@ -1,5 +1,6 @@
 .idea
 .vscode
 dist
+dist/admin
 target
 config/profiles

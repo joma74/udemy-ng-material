@@ -4,7 +4,7 @@
   "private": false,
   "license": "MIT",
   "scripts": {
-    "clean-dist": "del-cli 'dist/*'",
+    "clean-dist": "del-cli 'admin/dist/*'",
     "clean-target": "del-cli 'target/*' '!*/yarn.*.log' '!*/\\.gitkeep'",
     "_lint": "tslint --project '.'",
     "lint-fix": "yarn _lint --fix",
@@ -24,7 +24,7 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "ci": "run-s -l clean-target _lint _prettier tsc-validate-once",
-    "postinstall": "make-dir dist target"
+    "postinstall": "make-dir admin/dist"
   },
   "husky": {
     "hooks": {

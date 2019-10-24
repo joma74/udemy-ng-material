@@ -597,6 +597,7 @@ speed-measure-plugin*.json
 
 ### project ###
 dist
+admin/dist
 build
 target
 !*/.gitkeep
