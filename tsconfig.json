@@ -23,7 +23,7 @@
     "fullTemplateTypeCheck": true,
     "strictInjectionParameters": true
   },
-  "exclude": ["config/profiles/**"],
+  "exclude": ["config/profiles/**", "admin/dist/**"],
   "include": [
     "config/**/*",
     "e2e/**/*",

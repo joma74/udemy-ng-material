@@ -32,7 +32,7 @@ registerLocaleData(localeDE)
     SidenavListComponent,
   ],
   imports: [
-    AngularFireModule.initializeApp(environment.firebase),
+    AppModule.angularFireModuleInst,
     AppRoutingModule,
     AuthModule,
     BrowserModule,
@@ -55,4 +55,9 @@ registerLocaleData(localeDE)
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule {
+  // see https://github.com/angular/angular/issues/22829
+  static angularFireModuleInst = AngularFireModule.initializeApp(
+    environment.firebase,
+  )
+}
