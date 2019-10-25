@@ -2,7 +2,7 @@ import { LOCALE_ID, NgModule } from "@angular/core"
 
 import { registerLocaleData } from "@angular/common"
 import localeDE from "@angular/common/locales/de"
-import { AngularFireModule } from "@angular/fire"
+import { AngularFireModule, FirebaseOptionsToken } from "@angular/fire"
 import { AngularFirestoreModule } from "@angular/fire/firestore"
 import { FlexLayoutModule } from "@angular/flex-layout"
 import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from "@angular/material"
@@ -32,7 +32,7 @@ registerLocaleData(localeDE)
     SidenavListComponent,
   ],
   imports: [
-    AppModule.angularFireModuleInst,
+    AngularFireModule,
     AppRoutingModule,
     AuthModule,
     BrowserModule,
@@ -51,13 +51,9 @@ registerLocaleData(localeDE)
       useValue: navigator.language,
     },
     { provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: { duration: 5000 } },
+    { provide: FirebaseOptionsToken, useValue: environment.firebase },
     UIService,
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule {
-  // see https://github.com/angular/angular/issues/22829
-  static angularFireModuleInst = AngularFireModule.initializeApp(
-    environment.firebase,
-  )
-}
+export class AppModule {}
