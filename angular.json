@@ -45,13 +45,13 @@
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": {
-                "hidden": false,
+                "hidden": true,
                 "scripts": true,
-                "styles": true,
+                "styles": false,
                 "vendor": true
               },
               "extractCss": true,
-              "namedChunks": false,
+              "namedChunks": true,
               "aot": true,
               "extractLicenses": true,
               "vendorChunk": true,
