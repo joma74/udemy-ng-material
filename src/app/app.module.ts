@@ -51,6 +51,11 @@ registerLocaleData(localeDE)
       useValue: navigator.language,
     },
     { provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: { duration: 5000 } },
+    /**
+     * Issue see https://github.com/angular/angularfire/issues/1635
+     * workaround in https://github.com/angular/angular/issues/22829
+     * fixed in https://github.com/angular/angularfire/blob/master/CHANGELOG.md#500-rc9-2018-05-16
+     */
     { provide: FirebaseOptionsToken, useValue: environment.firebase },
     UIService,
   ],
