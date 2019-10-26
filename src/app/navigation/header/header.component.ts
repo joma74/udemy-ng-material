@@ -43,4 +43,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
   onLogout() {
     this.authService.logout()
   }
+
+  getAppVersion() {
+    return process.env.APP_VERSION
+  }
 }
