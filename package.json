@@ -27,6 +27,9 @@
     "ci": "run-s -l clean-target _lint _prettier tsc-validate-once",
     "postinstall": "make-dir admin/dist target"
   },
+  "resolutions": {
+    "typescript": ">=3.4.0 <3.6.0"
+  },
   "husky": {
     "hooks": {
       "pre-commit": "yarn tsc-validate-once && yarn lint-staged"
