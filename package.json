@@ -1,8 +1,13 @@
 {
   "name": "udemy-ng-material",
   "version": "0.0.0",
+  "version-next-release": "1.0.0",
   "private": false,
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/joma74/udemy-ng-material.git"
+  },
   "scripts": {
     "clean-dist": "del-cli 'admin/dist/*'",
     "clean-target": "del-cli 'target/*' '!*/yarn.*.log' '!*/\\.gitkeep'",
@@ -26,6 +31,40 @@
     "e2e": "ng e2e",
     "ci": "run-s -l clean-target _lint _prettier tsc-validate-once",
     "postinstall": "make-dir admin/dist target"
+  },
+  "release": {
+    "branch": "develop",
+    "npmPublish": false,
+    "plugins": [
+      "@semantic-release/commit-analyzer",
+      "@semantic-release/release-notes-generator",
+      [
+        "@semantic-release/changelog",
+        {
+          "changelogFile": "CHANGELOG.MD",
+          "changelogTitle": "Course Complete"
+        }
+      ],
+      "@semantic-release/npm",
+      "@semantic-release/github"
+    ],
+    "preset": "angular",
+    "releaseRules": [
+      {
+        "type": "bug",
+        "release": "patch"
+      },
+      {
+        "type": "chore",
+        "scope": "deps-dev",
+        "release": "patch"
+      },
+      {
+        "type": "chore",
+        "scope": "deps",
+        "release": "minor"
+      }
+    ]
   },
   "resolutions": {
     "typescript": ">=3.4.0 <3.6.0"
