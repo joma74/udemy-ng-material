@@ -10,7 +10,7 @@ const webpackConfig = {
   plugins: [
     new webpack.DefinePlugin({
       "process.env": {
-        APP_VERSION: JSON.stringify(pkg["version-next-release"]),
+        APP_VERSION: JSON.stringify(pkg.version),
       },
     }),
   ],

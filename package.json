@@ -1,7 +1,6 @@
 {
   "name": "udemy-ng-material",
-  "version": "0.0.0",
-  "version-next-release": "1.0.0",
+  "version": "1.0.0-develop.0-SNAPSHOT",
   "private": false,
   "license": "MIT",
   "repository": {
@@ -35,7 +34,14 @@
     "postinstall": "make-dir admin/dist target"
   },
   "release": {
-    "branch": "develop",
+    "branches": [
+      "master",
+      {
+        "name": "develop",
+        "channel": "develop",
+        "prerelease": true
+      }
+    ],
     "npmPublish": false,
     "plugins": [
       "@semantic-release/commit-analyzer",
@@ -44,7 +50,7 @@
         "@semantic-release/changelog",
         {
           "changelogFile": "CHANGELOG.MD",
-          "changelogTitle": "Course Complete"
+          "changelogTitle": "# Changelog"
         }
       ],
       "@semantic-release/npm",
@@ -54,7 +60,7 @@
           "package.json",
           "CHANGELOG.MD"
         ],
-        "message": "chore(release): ${nextRelease.version} [skip ci]nn${nextRelease.notes}"
+        "message": "chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"
       },
       "@semantic-release/github"
     ],
@@ -72,7 +78,7 @@
       {
         "type": "chore",
         "scope": "deps",
-        "release": "minor"
+        "release": "patch"
       }
     ]
   },
