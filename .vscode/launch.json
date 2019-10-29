@@ -10,13 +10,17 @@
           "cwd": "${workspaceFolder}",
           "name": "Launch Program",
           "program": "${workspaceFolder}/node_modules/.bin/env-cmd",
-          "args": ["-f", "./.semantic-release-env.js", "node", "index.js"]
+          "args": ["-f", "./.semantic-release-env.js", "printenv", "|", "sort", "|", "grep", "GIT"],
+          "env": {"DEBUG":"*", "NODE_DEBUG":"spawn"},
+          // see https://github.com/Microsoft/vscode/issues/19750#issuecomment-331236848 
+          "console": "integratedTerminal"
       },
       {
           "type": "node",
           "request": "launch",
           "name": "Debug Current Program",
-          "program": "${file}"
+          "program": "${file}",
+          "env": {"DEBUG":"*"}
       },
     {
       "name": "Launch Chrome localhost",

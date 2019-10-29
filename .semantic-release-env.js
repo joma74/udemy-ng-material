@@ -1,22 +1,36 @@
+const EOL = require("os").EOL
+const prettyformat = require("pretty-format")
 const execa = require("execa")
-
-const CONFIGNAME_EMAIL = "user.email"
-const CONFIGNAME_USERNAME = "user.name"
+const LOG = require("debug")("semantic-release-env")
 
 /**
  *
  * @param {string} configName
  */
 const readGitConfig = (configName) => {
-  return execa.sync("git", ["config", configName], { timeout: 500 }).stdout
+  try {
+    return execa
+      .sync("git", ["config", configName], { timeout: 500 })
+      .stdout.trim()
+  } catch (error) {
+    LOG(error)
+    return null
+  }
 }
 
-const CONFIG_EMAIL = readGitConfig("user.email")
-const CONFIG_NAME = readGitConfig("user.name")
+const CONFIGNAME_EMAIL = "user.email"
+const CONFIGNAME_USERNAME = "user.name"
 
-module.exports = {
-  GIT_AUTHOR_EMAIL: readGitConfig(CONFIG_EMAIL),
-  GIT_AUTHOR_NAME: readGitConfig(CONFIG_NAME),
-  GIT_COMMITTER_EMAIL: readGitConfig(CONFIG_EMAIL),
-  GIT_COMMITTER_NAME: readGitConfig(CONFIG_NAME),
+const CONFIG_USEREMAIL = readGitConfig(CONFIGNAME_EMAIL)
+const CONFIG_USERNAME = readGitConfig(CONFIGNAME_USERNAME)
+
+const GITCONFIG = {
+  GIT_AUTHOR_EMAIL: CONFIG_USEREMAIL || undefined,
+  GIT_AUTHOR_NAME: CONFIG_USERNAME || undefined,
+  GIT_COMMITTER_EMAIL: CONFIG_USEREMAIL || undefined,
+  GIT_COMMITTER_NAME: CONFIG_USERNAME || undefined,
 }
+
+LOG(EOL + prettyformat(GITCONFIG))
+
+module.exports = GITCONFIG
