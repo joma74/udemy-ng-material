@@ -7,6 +7,14 @@
       {
           "type": "node",
           "request": "launch",
+          "cwd": "${workspaceFolder}",
+          "name": "Launch Program",
+          "program": "${workspaceFolder}/node_modules/.bin/env-cmd",
+          "args": ["-f", "./.semantic-release-env.js", "node", "index.js"]
+      },
+      {
+          "type": "node",
+          "request": "launch",
           "name": "Debug Current Program",
           "program": "${file}"
       },

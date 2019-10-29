@@ -1,6 +1,6 @@
 {
   "name": "udemy-ng-material",
-  "version": "1.0.0-develop.0-SNAPSHOT",
+  "version": "1.0.0-develop.0",
   "private": false,
   "license": "MIT",
   "repository": {
@@ -26,8 +26,9 @@
     "build": "yarn clean-dist && ng build --prod --stats-json --named-chunks && cpy 'admin/dist/fitness-tracker/*.js.map' admin/dist/fitness-tracker-sourcemaps && del 'admin/dist/fitness-tracker/*.js.map'",
     "test-once": "yarn test-watch --watch=false",
     "test-watch": "ng test",
-    "release-dry": "semantic-release -d | tee semantic-release-dry.log",
-    "release": "semantic-release| tee semantic-release.log",
+    "release-dry": "env-cmd -f .semantic-release-env.js",
+    "release-dry-old": "env-cmd .semantic-release-env.rc.js semantic-release -d 2>&1 | tee semantic-release-dry.log",
+    "release": "env-cmd -f semantic-release-env.rc.js semantic-release --no-ci 2>&1 | tee semantic-release.log",
     "lint": "ng lint",
     "e2e": "ng e2e",
     "ci": "run-s -l clean-target _lint _prettier tsc-validate-once",
@@ -38,7 +39,7 @@
       "master",
       {
         "name": "develop",
-        "channel": "develop",
+        "channel": "beta",
         "prerelease": true
       }
     ],
@@ -62,7 +63,19 @@
         ],
         "message": "chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"
       },
-      "@semantic-release/github"
+      "@semantic-release/github",
+      [
+        "@semantic-release/exec",
+        {
+          "verifyConditionsCmd": "./semantic-release-verifyConditions.sh verifyConditionsCmd",
+          "verifyReleaseCmd": "./semantic-release-show-env.sh verifyReleaseCmd ${nextRelease.version} ${JSON.stringify(nextRelease)}",
+          "generateNotesCmd": "./semantic-release-show-env.sh generateNotesCmd ${nextRelease.version} ${JSON.stringify(nextRelease)}",
+          "prepareCmd": "./semantic-release-show-env.sh prepareCmd ${nextRelease.version} ${JSON.stringify(nextRelease)}",
+          "publishCmd": "./semantic-release-show-env.sh publishCmd ${nextRelease.version} ${JSON.stringify(nextRelease)}",
+          "successCmd": "./semantic-release-show-env.sh successCmd ${nextRelease.version} ${JSON.stringify(nextRelease)}",
+          "failCmd": "./semantic-release-show-env.sh failCmd ${nextRelease.version} ${JSON.stringify(nextRelease)}"
+        }
+      ]
     ],
     "preset": "angular",
     "releaseRules": [
@@ -134,7 +147,9 @@
     "codelyzer": "^5.0.0",
     "cpy-cli": "^2.0.0",
     "del-cli": "^3.0.0",
+    "env-cmd": "^10.0.1",
     "esm": "^3.2.25",
+    "execa": "^3.2.0",
     "firebase-admin": "^8.6.1",
     "http-server": "^0.11.1",
     "husky": "^3.0.5",
