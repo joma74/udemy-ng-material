@@ -31,7 +31,8 @@
     "src/**/*",
     "admin/**/*",
     "karma.conf.js",
-    "extra-webpack.config.js"
+    "extra-webpack.config.js",
+    ".semantic-release-env.js"
   ],
   "typeAcquisition": {
     "enable": false
