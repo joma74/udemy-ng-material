@@ -11,6 +11,7 @@
     "module": "esnext",
     "moduleResolution": "node",
     "importHelpers": true,
+    "skipLibCheck": true,
     "target": "es2015",
     "typeRoots": ["node_modules/@types"],
     "lib": ["es2018", "dom"],
@@ -26,13 +27,12 @@
   },
   "exclude": ["config/profiles/**", "admin/dist/**"],
   "include": [
+    "admin/**/*",
     "config/**/*",
     "e2e/**/*",
+    "release/**/*",
     "src/**/*",
-    "admin/**/*",
-    "karma.conf.js",
-    "extra-webpack.config.js",
-    ".semantic-release-env.js"
+    "*.js"
   ],
   "typeAcquisition": {
     "enable": false
