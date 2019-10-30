@@ -24,6 +24,7 @@
     "serve-hmr": "ng serve --liveReload=true --configuration hmr",
     "serve-prod": "http-server admin/dist/fitness-tracker -p 4201",
     "build": "yarn clean-dist && ng build --prod --stats-json --named-chunks && cpy 'admin/dist/fitness-tracker/*.js.map' admin/dist/fitness-tracker-sourcemaps && del 'admin/dist/fitness-tracker/*.js.map'",
+    "test-node": "jest",
     "test-once": "yarn test-watch --watch=false",
     "test-watch": "ng test",
     "release-dry": "env-cmd -f release/.semantic-release-env.js",
@@ -31,7 +32,7 @@
     "release": "env-cmd -f release/.semantic-release-env.js semantic-release --no-ci 2>&1 | tee release/semantic-release.log",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "ci": "run-s -l clean-target _lint _prettier tsc-validate-once",
+    "ci": "run-s -l clean-target _lint _prettier tsc-validate-once test-node",
     "postinstall": "make-dir admin/dist target"
   },
   "release": {
