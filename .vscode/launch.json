@@ -10,7 +10,7 @@
           "cwd": "${workspaceFolder}",
           "name": "Launch Program",
           "program": "${workspaceFolder}/node_modules/.bin/env-cmd",
-          "args": ["-f", "./.semantic-release-env.js", "printenv", "|", "sort", "|", "grep", "GIT"],
+          "args": ["-f", "./release/semantic-release-env.js", "printenv", "|", "sort", "|", "grep", "GIT"],
           "env": {"DEBUG":"*", "NODE_DEBUG":"spawn"},
           // see https://github.com/Microsoft/vscode/issues/19750#issuecomment-331236848 
           "console": "integratedTerminal"
