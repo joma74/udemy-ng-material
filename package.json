@@ -27,74 +27,13 @@
     "test-node": "jest",
     "test-once": "yarn test-watch --watch=false",
     "test-watch": "ng test",
-    "release-dry": "env-cmd -f release/semantic-release-env.js printenv | sort | grep GIT",
+    "release-dry": "env-cmd -f release/semantic-release-env.js semantic-release -e ./release/semantic-release-evalnv-conf.js --no-ci --debug -d 2>&1 | tee release/semantic-release-dry.log",
     "release-dry-old": "env-cmd -f release/semantic-release-env.js semantic-release -d 2>&1 | tee release/semantic-release-dry.log",
     "release": "env-cmd -f release/semantic-release-env.js semantic-release --no-ci 2>&1 | tee release/semantic-release.log",
     "lint": "ng lint",
     "e2e": "ng e2e",
     "ci": "run-s -l clean-target _lint _prettier tsc-validate-once test-node",
     "postinstall": "make-dir admin/dist target"
-  },
-  "release": {
-    "branches": [
-      "master",
-      {
-        "name": "develop",
-        "channel": "beta",
-        "prerelease": true
-      }
-    ],
-    "npmPublish": false,
-    "plugins": [
-      "@semantic-release/commit-analyzer",
-      "@semantic-release/release-notes-generator",
-      [
-        "@semantic-release/changelog",
-        {
-          "changelogFile": "CHANGELOG.MD",
-          "changelogTitle": "# Changelog"
-        }
-      ],
-      "@semantic-release/npm",
-      {
-        "path": "@semantic-release/git",
-        "assets": [
-          "package.json",
-          "CHANGELOG.MD"
-        ],
-        "message": "chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"
-      },
-      "@semantic-release/github",
-      [
-        "@semantic-release/exec",
-        {
-          "verifyConditionsCmd": "./semantic-release-verifyConditions.sh verifyConditionsCmd",
-          "verifyReleaseCmd": "./semantic-release-show-env.sh verifyReleaseCmd ${nextRelease.version} ${JSON.stringify(nextRelease)}",
-          "generateNotesCmd": "./semantic-release-show-env.sh generateNotesCmd ${nextRelease.version} ${JSON.stringify(nextRelease)}",
-          "prepareCmd": "./semantic-release-show-env.sh prepareCmd ${nextRelease.version} ${JSON.stringify(nextRelease)}",
-          "publishCmd": "./semantic-release-show-env.sh publishCmd ${nextRelease.version} ${JSON.stringify(nextRelease)}",
-          "successCmd": "./semantic-release-show-env.sh successCmd ${nextRelease.version} ${JSON.stringify(nextRelease)}",
-          "failCmd": "./semantic-release-show-env.sh failCmd ${nextRelease.version} ${JSON.stringify(nextRelease)}"
-        }
-      ]
-    ],
-    "preset": "angular",
-    "releaseRules": [
-      {
-        "type": "bug",
-        "release": "patch"
-      },
-      {
-        "type": "chore",
-        "scope": "deps-dev",
-        "release": "patch"
-      },
-      {
-        "type": "chore",
-        "scope": "deps",
-        "release": "patch"
-      }
-    ]
   },
   "resolutions": {
     "typescript": ">=3.4.0 <3.6.0"

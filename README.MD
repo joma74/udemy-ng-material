@@ -26,7 +26,7 @@ yarn global add @semantic-release/changelog
 ### Pre-required setup
 
 ```
-export GH_TOKEN=yourghtoken
+ export GH_TOKEN=yourghtoken
 ```
 
 ### What dry-run skips
@@ -44,6 +44,29 @@ export GH_TOKEN=yourghtoken
 [1:51:49 PM] [semantic-release] › ⚠  Skip step "success" of plugin "@semantic-release/github" in dry-run mode
 [1:51:49 PM] [semantic-release] › ⚠  Skip step "success" of plugin "@semantic-release/exec" in dry-run mode
 ...
+```
+
+### Debug points
+
+```js
+ // semantic-release/lib/plugins/normalize.js
+ ...
+        const result = await func({
+          ...cloneDeep(omit(input, ['stdout', 'stderr', 'logger'])),
+          stdout,
+          stderr,
+          logger: logger.scope(logger.scopeName, pluginName),
+        });
+...
+```
+
+```js
+// @semantic-release/exec/lib/exec.js
+...
+const result = execa(script, {shell: shell || true, cwd: execCwd ? path.resolve(cwd, execCwd) : cwd, env});
+...
+  return (await result).stdout.trim();
+
 ```
 
 ### Tapping code
