@@ -15,9 +15,12 @@ exec 1>&2
 
 echo "args: $@"
 
+echo "$2" > target/releaseversion.txt
+echo "$2-SNAPSHOT" > target/nextversion.txt
+
 printenv | grep -i release
 
 # this is the error displayment, so use fd 3 
->&3 echo "evaluate version only, ignore expected ✖ EVERIFYRELEASE AggregateError:SemanticReleaseError"
+>&3 echo "evaluate next version(evalnv) only, ignore expected ✖ EVERIFYRELEASE AggregateError:SemanticReleaseError"
 
 exit -1

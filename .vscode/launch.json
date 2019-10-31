@@ -11,7 +11,7 @@
           "name": "Launch env-cmd",
           "program": "${workspaceFolder}/node_modules/.bin/env-cmd",
           "args": ["-f", "./release/semantic-release-env.js", "printenv", "|", "sort", "|", "grep", "GIT"],
-          "env": {"DEBUG":"*", "NODE_DEBUG":"spawn"},
+          "env": {"DEBUG":"*,-semantic-release:*", "NODE_DEBUG":"spawn"},
           // see https://github.com/Microsoft/vscode/issues/19750#issuecomment-331236848 
           "console": "integratedTerminal"
       },
@@ -21,10 +21,10 @@
         "cwd": "${workspaceFolder}",
         "name": "Launch sr evalnv dry",
         "program": "/home/joerg/.npm-global/bin/semantic-release",
-        "args": ["--no-ci", "--debug", "-d", "2>&1" ,"|" ,"tee", "release/semantic-release-evalnv-dry.log"],
+        "args": ["--no-ci", "-d", "2>&1" ,"|" ,"tee", "release/semantic-release-evalnv-dry.log"],
         "env": {"DEBUG":"*,-semantic-release:*", "NODE_DEBUG":"spawn"},
         // see https://github.com/Microsoft/vscode/issues/19750#issuecomment-331236848 
-        "console": "integratedTerminal"
+        "console": "integratedTerminal",
       },
       {
         "type": "node",
