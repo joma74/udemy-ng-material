@@ -27,7 +27,7 @@ test("can read git config", () => {
     // @ts-ignore
     .mockReturnValueOnce({ ...mockReturnValue, stdout: "testa-mails@hoot.net" })
     .mockReturnValueOnce({ ...mockReturnValue, stdout: "testa74" })
-  const semanticreleaseenv = require("./semantic-release-env.js")
+  const semanticreleaseenv = require("./git.js")
   expect(mock).toHaveBeenCalledTimes(2)
   expect(semanticreleaseenv.GIT_AUTHOR_EMAIL).toBe("testa-mails@hoot.net")
   expect(semanticreleaseenv.GIT_AUTHOR_NAME).toBe("testa74")

@@ -1,6 +1,6 @@
 {
   "name": "udemy-ng-material",
-  "version": "1.0.0-develop.0",
+  "version": "1.0.0-release-proc.0-SNAPSHOT",
   "private": false,
   "license": "MIT",
   "repository": {
@@ -27,9 +27,10 @@
     "test-node": "jest",
     "test-once": "yarn test-watch --watch=false",
     "test-watch": "ng test",
+    "release-evalnv": "release/scripts/semantic-release-evalnv.sh",
     "release-dry": "env-cmd -f release/semantic-release-env.js semantic-release -e ./release/semantic-release-evalnv-conf.js --no-ci --debug -d 2>&1 | tee release/semantic-release-dry.log",
     "release-dry-old": "env-cmd -f release/semantic-release-env.js semantic-release -d 2>&1 | tee release/semantic-release-dry.log",
-    "release": "env-cmd -f release/semantic-release-env.js semantic-release --no-ci 2>&1 | tee release/semantic-release.log",
+    "release": "env-cmd -f release/envs/release.js semantic-release --no-ci 2>&1 | tee release/semantic-release.log",
     "lint": "ng lint",
     "e2e": "ng e2e",
     "ci": "run-s -l clean-target _lint _prettier tsc-validate-once test-node",

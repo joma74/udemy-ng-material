@@ -7,12 +7,13 @@ const EVALNV_CONFIG = {
     [
       "@semantic-release/exec",
       {
-        failCmd:
-          "./release/cmds/semantic-release-show-env.sh failCmd ${JSON.stringify(nextRelease)}",
+        failCmd: "./release/cmds/semantic-release-show-env.sh failCmd",
         successCmd:
-          "./release/cmds/semantic-release-show-env.sh successCmd ${JSON.stringify(nextRelease)}",
+          "./release/cmds/cmds/semantic-release-show-env.sh successCmd",
+        verifyConditionsCmd:
+          "./release/cmds/semantic-release-evalnv.sh verifyConditionsCmd",
         verifyReleaseCmd:
-          "./release/cmds/semantic-release-evalrv.sh verifyReleaseCmd ${nextRelease.version} ${JSON.stringify(nextRelease)}",
+          "./release/cmds/semantic-release-evalnv.sh verifyReleaseCmd ${nextRelease.version} ${JSON.stringify(nextRelease)}",
       },
     ],
   ],
@@ -25,10 +26,8 @@ const RELEASE_CONFIG = {
     [
       "@semantic-release/exec",
       {
-        failCmd:
-          "./release/cmds/semantic-release-show-env.sh failCmd ${JSON.stringify(nextRelease)}",
-        successCmd:
-          "./release/cmds/semantic-release-show-env.sh successCmd ${JSON.stringify(nextRelease)}",
+        failCmd: "./release/cmds/semantic-release-show-env.sh failCmd",
+        successCmd: "./release/cmds/semantic-release-show-env.sh successCmd",
         verifyReleaseCmd:
           "./release/cmds/semantic-release-show-env.sh verifyReleaseCmd ${nextRelease.version} ${JSON.stringify(nextRelease)}",
       },

@@ -1,7 +1,7 @@
 const EOL = require("os").EOL
 const prettyformat = require("pretty-format")
 const execa = require("execa")
-const LOG = require("debug")("semantic-release-env")
+const LOG = require("debug")("semantic-release-env-git")
 
 /**
  *
@@ -24,13 +24,13 @@ const CONFIGNAME_USERNAME = "user.name"
 const CONFIG_USEREMAIL = readGitConfig(CONFIGNAME_EMAIL)
 const CONFIG_USERNAME = readGitConfig(CONFIGNAME_USERNAME)
 
-const GITCONFIG = {
+const CONFIG = {
   GIT_AUTHOR_EMAIL: CONFIG_USEREMAIL || undefined,
   GIT_AUTHOR_NAME: CONFIG_USERNAME || undefined,
   GIT_COMMITTER_EMAIL: CONFIG_USEREMAIL || undefined,
   GIT_COMMITTER_NAME: CONFIG_USERNAME || undefined,
 }
 
-LOG(EOL + prettyformat(GITCONFIG))
+LOG(EOL + prettyformat(CONFIG))
 
-module.exports = GITCONFIG
+module.exports = CONFIG
