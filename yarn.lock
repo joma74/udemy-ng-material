@@ -200,9 +200,9 @@
     tslib "^1.9.0"
 
 "@angular/fire@^5.2.1":
-  version "5.4.0"
-  resolved "https://registry.yarnpkg.com/@angular/fire/-/fire-5.4.0.tgz#68983d0d6bd6c804ea48a913b67547f7227debfd"
-  integrity sha512-067oatMtDbNKEWNdZoMWqKOzPpp0r8XZvpL1bcH6PO+q62ceJ2ig46ne1UqJP2nHRyXNAtIyJp7VhVoG4gRPiA==
+  version "5.4.1"
+  resolved "https://registry.yarnpkg.com/@angular/fire/-/fire-5.4.1.tgz#a7233b056814bb10f622bb1e06b999304684a4ff"
+  integrity sha512-pUkaJEoIyHY+oh61rIZkAdd0QMYZ+WG1DGDjExmv5MDFzhnnbn6mvCoQP1le6v49+jAJUmwQJFhe9lfYavsmBg==
 
 "@angular/flex-layout@^8.0.0-beta.27":
   version "8.0.0-beta.27"
